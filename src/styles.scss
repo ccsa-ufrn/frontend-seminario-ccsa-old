@@ -1,17 +1,78 @@
 @import url('https://fonts.googleapis.com/css?family=Roboto:300,400,500,700');
-@import './icons';
 
 * { font-family: 'Roboto', sans-serif; }
 .text-right { text-align: right; }
 
+
 body {
+    transition: transform 0.3s;
     padding-top: 40px;
+
+    nav.menu-mobile {
+        position: fixed;
+        top: 0;
+        bottom: 0;
+        left: -210px;
+        width: 210px;
+        background: #669900;
+        margin: 0;
+        display: block;
+        position: fixed;
+        padding-top: 40px;
+
+        a:first-child {
+            padding-top: 0;
+        }
+
+        a {
+            display: block;
+            color: white !important;
+            font-weight: 300;
+            font-size: 14px;
+            padding: 10px 20px;
+            text-align: right;
+            transition: transform 0.3s;
+        }
+
+        a:hover {
+            transform: translate3d(-10px, 0, 0);
+            font-weight: 500;
+            transition: transform 0.6s, font-weight 0.6s;
+        }
+    }
+
+    div.backdrop {
+        display: none;
+        z-index: 9;
+        position: fixed;
+        top: 0;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        background: rgba(0, 0, 0, 0.25);
+    }
+
 }
+
+body.overlay {
+    overflow: hidden;
+}
+
+body.backdrop {
+    div.backdrop {
+        display: block;
+    }
+}
+
+body.menu {
+    transition: transform 0.6s;
+    transform: translate3d(210px, 0, 0);
+}
+
 
 section, nav {
-    margin: 20px 0px;
+    padding: 20px 0px;
 }
-
 
 header {
     position: fixed;
@@ -24,7 +85,6 @@ header {
     background: white;
     z-index: 10;
 
-
     a {
         display: inline-block;
         height: 14px;
@@ -32,6 +92,26 @@ header {
         font-weight: 300;
         padding: 13px 0;
         margin: 0px;
+    }
+
+    a.login {
+        position: relative;
+
+        // NÃO PODE SER AQUI
+        div.login {
+            position: absolute;
+            right: 0px;
+            top: 30px;
+            height: 180px;
+            width: 250px;
+            z-index: 11;
+            display: block;
+            background: white;
+            border: 1px solid rgb(220, 220, 220);
+            box-shadow: 0 2px 4px rgba(0,0,0,0.08),
+                0 -1px 0px rgba(0,0,0,0.008);
+        }
+
     }
 
 } /** end / header */
@@ -44,21 +124,11 @@ section.logo {
 
 } /** end / section.logo */
 
-nav {
-
-    a.open-menu {
-        display: block;
-        font-size: 11px;
-        text-align: center;
-        padding: 10px;
-        background: #669900;
-        color: white !important;
-        line-height: 11px;
-    }
-
+nav.main {
+    display: none;
 } /** end / nav */
 
-section.news {
+section {
 
     h1 {
         font-weight: 500;
@@ -66,6 +136,87 @@ section.news {
     }
 
 }
+
+section.downloads {
+
+    nav {
+        display: flex;
+        flex-direction: column;
+        padding: 0px 10px;
+
+        a {
+            display: block;
+            background: rgb(249, 249, 249);
+            border: 1px solid rgb(230, 230, 230);
+            padding: 10px;
+            padding-top: 10px;
+            padding-bottom: 10px;
+            margin-bottom: 10px;
+            border-radius: 2px;
+            line-height: 9px;
+            transition: box-shadow 0.15s;
+            font-weight: 300;
+            font-size: 12px;
+
+            img {
+                margin-right: 10px;
+                margin-top: 0px;
+            }
+        }
+
+        a:hover {
+            box-shadow: 0 0px 4px rgba(0,0,0,0.09),
+                0 0px 2px rgba(0,0,0,0.09);
+            transition: box-shadow 0.3s;
+        }
+
+    }
+
+} /** end / section.downloads */
+
+section.register {
+    background: #006699;
+
+    h1 {
+        color: white;
+        font-weight: 700;
+
+        span {
+            margin-top: -20px;
+            font-weight: 500;
+            font-size: 18px;
+        }
+    }
+
+    form {
+
+        div.form-control {
+
+            label {
+                display: block;
+                color: white;
+                font-weight: 500;
+
+            }
+
+            input,
+            select {
+                display: block;
+                background: white;
+                width: 100%;
+                padding: 10px 20px;
+                outline: none;
+                border: 1px solid rgb(230, 230, 230);
+                box-shadow: 0 0px 4px rgba(0,0,0,0.09),
+                    0 0px 2px rgba(0,0,0,0.09);
+                border-radius: 3px;
+            }
+
+        }
+
+    }
+
+} /** end / .register */
 
 /* Extra small */
 @media only screen and (min-width : 480px) {

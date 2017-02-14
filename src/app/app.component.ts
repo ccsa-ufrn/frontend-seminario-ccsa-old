@@ -1,35 +1,25 @@
-import { Component, OnInit, AfterContentChecked } from '@angular/core';
-import { Observable } from 'rxjs/Rx';
+import { Component, OnInit } from '@angular/core';
+import { DomHandler } from './dom-handler.service';
 
 @Component({
     selector: 'app-root',
-    templateUrl: './app.component.html'
+    templateUrl: './app.component.html',
+    providers: [DomHandler]
 })
-export class AppComponent implements OnInit, AfterContentChecked {
+export class AppComponent implements OnInit{
 
-    private _logoImg: string;
+    constructor(private _domHandler: DomHandler) { }
 
-    constructor() { }
+    ngOnInit() { }
 
-    ngOnInit() {
-        Observable
-        .fromEvent(window, 'resize')
-        .debounceTime(150)
-        .subscribe((e : Event) => {
-            this._setLogoImg(this._getViewport());
-        });
-    }
-
-    ngAfterContentChecked() {
-        this._setLogoImg(this._getViewport());
-    }
-
-    private _setLogoImg(viewport: any) {
-        console.log(this._getViewport())
-        if(viewport.width > 768)
-            this._logoImg = `assets/marca.png`;
-        else
-            this._logoImg = `assets/marca_mobile.png`;
+    private toggleMenu() {
+        if(this._domHandler.hasClass(document.querySelector('body'), 'menu')){
+            this._domHandler.removeClass(document.querySelector('body'), 'menu');
+            this._domHandler.removeClass(document.querySelector('body'), 'overlay');
+        } else {
+            this._domHandler.addClass(document.querySelector('body'), 'menu');
+            this._domHandler.addClass(document.querySelector('body'), 'overlay');
+        }
     }
 
     private _getViewport(): any {

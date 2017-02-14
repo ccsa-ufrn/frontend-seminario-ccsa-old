@@ -21,9 +21,12 @@
             "styles": [
                 "../node_modules/bootstrap/dist/css/bootstrap-reboot.min.css",
                 "../node_modules/bootstrap/dist/css/bootstrap-grid.min.css",
+                "../node_modules/font-awesome/css/font-awesome.min.css",
                 "styles.scss"
             ],
-            "scripts": [],
+            "scripts": [
+                "assets/picturefill.min.js"
+            ],
             "environments": {
                 "source": "environments/environment.ts",
                 "dev": "environments/environment.ts",
