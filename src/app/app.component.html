@@ -1,5 +1,6 @@
 <!-- OVERLAY -->
 <div class="backdrop"></div>
+<div (click)="_handleOverlayClick()" class="overlay"></div>
 <nav class="menu-mobile">
     <a>Entrar</a>
     <a>Inscrição</a>
@@ -9,7 +10,6 @@
     <a>Facebook CCSA</a>
 </nav>
 <!-- END - OVERLAY -->
-
 
 <header>
     <div class="container">
@@ -22,9 +22,22 @@
                     <i class="fa fa-bars" aria-hidden="true"></i>
                 </a>
 
-                <a class="login" href>
-                    ENTRAR
-                    <div class="login">
+                <a class="login-container">
+                    <a
+                        class="login"
+                        tabindex="0"
+                        (click)="_openLogin()"
+                        (keypress.enter)="_openLogin()">ENTRAR</a>
+
+                    <div class="login" *ngIf="_isLoginModalActive">
+                        <div class="l">
+                            <input #mailInput type="text" placeholder="Email">
+                            <input type="password" placeholder="Senha">
+                            <button type="submit">LOGIN</button>
+                        </div>
+                        <div class="forgot">
+                            <a href>Esqueci a senha</a>
+                        </div>
                     </div>
                 </a>
             </div>
@@ -32,145 +45,155 @@
     </div>
 </header>
 
-<section class="logo">
-    <div class="container">
-        <div class="row">
-            <div class="col-12">
-                <picture> <!-- greater size to lower size -->
-                    <source srcset="assets/marca.png" media="(min-width: 768px)">
-                    <source srcset="assets/marca_mobile.png" media="(min-width: 0px)">
-                    <img width="100%" alt="Marca - Seminário de Pesquisa do CCSA">
-                </picture>
-            </div>
-        </div>
-    </div>
-</section>
+<main>
 
-<nav class="main">
-    <div class="container">
-        <div class="row">
-            <div class="col-12">
-                <a class="open-menu">
-                    MENU
-                </a>
+    <section class="logo">
+        <div class="container">
+            <div class="row">
+                <div class="col-12">
+                    <picture> <!-- greater size to lower size -->
+                        <source srcset="assets/marca.png" media="(min-width: 768px)">
+                        <source srcset="assets/marca_mobile.png" media="(min-width: 0px)">
+                        <img width="100%" alt="Marca - Seminário de Pesquisa do CCSA">
+                    </picture>
+                </div>
             </div>
         </div>
-    </div>
-</nav>
+    </section>
 
-<section class="presentation">
-    <div class="container">
-        <div class="row">
-            <div class="col-md-6">
-                <b>O XXII Seminário de Pesquisa do CCSA/UFRN – Desigualdades Sociais e Cidadania no Brasil: o debate atual – </b> evidencia a preocupação
-                do Centro de Ciências Sociais Aplicadas em consolidar um espaço para discussão e socialização do conhecimento
-                produzido nas diferentes áreas das ciências sociais aplicadas (Direito, Economia, Administração, Serviço Social,
-                Ciências Contábeis, Turismo e Biblioteconomia)
-            </div>
-            <div class="col-md-6">
-                Tem como objetivo tornar acessível à comunidade universitária a produção científica existente no CCSA por meio da divulgação
-                dos trabalhos apresentados; estimular a comunidade acadêmica do CCSA para a prática da pesquisa; contribuir para
-                o desenvolvimento da pesquisa e da reflexão teórico-metodológica no campo das Ciências Sociais Aplicadas; abrir
-                espaço para interlocução com outras áreas do conhecimento.
-            </div>
-        </div>
-    </div>
-</section>
-
-<section class="news">
-    <div class="container">
-        <div class="row">
-            <div class="col-md-12">
-                <h1>NOTÍCIAS</h1>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-md-12">
-                <h1>NOTÍCIAS</h1>
-            </div>
-        </div>
-    </div>
-</section>
-
-<section class="downloads">
-    <div class="container">
-        <div class="row">
-            <div class="col-md-12">
-                <h1>DOWNLOADS</h1>
-                <nav>
-                    <a>
-                        <img src="assets/download_01_mobile.png">
-                        Normas
+    <nav class="main">
+        <div class="container">
+            <div class="row">
+                <div class="col-12">
+                    <a class="open-menu">
+                        MENU
                     </a>
-                    <a>
-                        <img src="assets/download_02_mobile.png">
-                        Template para Pôster
-                    </a>
-                    <a>
-                        <img src="assets/download_02_mobile.png">
-                        Template para Comunicação Oral
-                    </a>
-                    <a>
-                        <img src="assets/download_02_mobile.png">
-                        Template para Casos para Ensino
-                    </a>
-                    <a>
-                        <img src="assets/download_01_mobile.png">
-                        Programação
-                    </a>
-                </nav>
+                </div>
             </div>
         </div>
-    </div>
-</section>
+    </nav>
 
-<section class="thematic-groups">
-    <div class="container">
-        <div class="row">
-            <div class="col-md-12">
-                <h1>GRUPOS TEMÁTICOS</h1>
+    <section class="presentation">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-6">
+                    <b>O XXII Seminário de Pesquisa do CCSA/UFRN – Desigualdades Sociais e
+                    Cidadania no Brasil: o debate atual – </b> evidencia a preocupação...
+                    <!--do Centro de Ciências Sociais Aplicadas em consolidar um espaço para discussão e socialização do conhecimento
+                    produzido nas diferentes áreas das ciências sociais aplicadas (Direito, Economia, Administração, Serviço Social,
+                    Ciências Contábeis, Turismo e Biblioteconomia) -->
+                </div>
+                <div class="col-md-6">
+                    <!--Tem como objetivo tornar acessível à comunidade universitária a produção científica existente no CCSA por meio da divulgação
+                    dos trabalhos apresentados; estimular a comunidade acadêmica do CCSA para a prática da pesquisa; contribuir para
+                    o desenvolvimento da pesquisa e da reflexão teórico-metodológica no campo das Ciências Sociais Aplicadas; abrir
+                    espaço para interlocução com outras áreas do conhecimento.-->
+                </div>
             </div>
         </div>
-    </div>
-</section>
+    </section>
 
-<section class="register">
-    <div class="container">
-        <div class="row">
-            <div class="col-md-12">
-                <h1>INSCRIÇÕES <span>ATÉ 7 DE MAIO</span></h1>
-
-                <form>
-                    <div class="form-control">
-                        <label>NOME:</label>
-                        <input placeholder="Nome Completo">
+    <section class="news">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12">
+                    <h1>NOTÍCIAS</h1>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="news-container">
+                        <a>SECRETARIA DO SEMINÁRIO EM NOVO LOCAL E COM NOVO NÚMERO DE TELEFONE</a>
+                        <a>ENTREGA DAS PASTAS</a>
+                        <a>AUTORES DE PÔSTERES, ATENÇÃO!</a>
+                        <a>AUTORES DE PÔSTERES, ATENÇÃO!</a>
                     </div>
-
-                    <div class="form-control">
-                        <label>EMAIL:</label>
-                        <input placeholder="Email">
-                    </div>
-
-                    <div class="form-control">
-                        <label>CPF:</label>
-                        <input placeholder="CPF">
-                    </div>
-
-                    <div class="form-control">
-                        <label>Categoria:</label>
-                        <select placeholder="Categoria">
-                            <option>Opção 1</option>
-                        </select>
-
-                    </div>
-
-                    <div class="form-control">
-                        <label>NOME:</label>
-                        <input placeholder="Nome Completo">
-                    </div>
-                </form>
-
+                </div>
             </div>
         </div>
-    </div>
-</section>
+    </section>
+
+    <section class="downloads">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12">
+                    <h1>DOWNLOADS</h1>
+                    <nav>
+                        <a>
+                            <img src="assets/download_01_mobile.png">
+                            Normas
+                        </a>
+                        <a>
+                            <img src="assets/download_02_mobile.png">
+                            Template para Pôster
+                        </a>
+                        <a>
+                            <img src="assets/download_02_mobile.png">
+                            Template para Comunicação Oral
+                        </a>
+                        <a>
+                            <img src="assets/download_02_mobile.png">
+                            Template para Casos para Ensino
+                        </a>
+                        <a>
+                            <img src="assets/download_01_mobile.png">
+                            Programação
+                        </a>
+                    </nav>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="thematic-groups">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12">
+                    <h1>GRUPOS TEMÁTICOS</h1>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="register">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12">
+                    <h1>INSCRIÇÕES <span>ATÉ 7 DE MAIO</span></h1>
+
+                    <form>
+                        <div class="form-control">
+                            <label>NOME:</label>
+                            <input placeholder="Nome Completo">
+                        </div>
+
+                        <div class="form-control">
+                            <label>EMAIL:</label>
+                            <input placeholder="Email">
+                        </div>
+
+                        <div class="form-control">
+                            <label>CPF:</label>
+                            <input placeholder="CPF">
+                        </div>
+
+                        <div class="form-control">
+                            <label>Categoria:</label>
+                            <select placeholder="Categoria">
+                                <option>Opção 1</option>
+                            </select>
+
+                        </div>
+
+                        <div class="form-control">
+                            <label>NOME:</label>
+                            <input placeholder="Nome Completo">
+                        </div>
+                    </form>
+
+                </div>
+            </div>
+        </div>
+    </section>
+
+</main>
