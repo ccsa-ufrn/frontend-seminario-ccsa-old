@@ -3,6 +3,24 @@
 * { font-family: 'Roboto', sans-serif; }
 .text-right { text-align: right; }
 
+div.pattern1 {
+    height: 20px;
+    width: 100%;
+    background: url(assets/pattern1.png)
+}
+
+div.pattern2 {
+    height: 20px;
+    width: 100%;
+    background: url(assets/pattern2.png)
+}
+
+div.pattern3 {
+    height: 20px;
+    width: 100%;
+    background: url(assets/pattern3.png)
+}
+
 body {
     transition: transform 0.3s;
 
@@ -68,7 +86,7 @@ body {
         position: fixed;
         top: 0;
         bottom: 0;
-        left: 0;
+        left: 210px;
         right: 0;
     }
 
@@ -201,8 +219,17 @@ section {
     h1 {
         font-weight: 500;
         letter-spacing: 5px;
+
+        span {
+            font-weight: 800;
+        }
     }
 
+}
+
+section.presentation {
+    font-weight: 300;
+    text-align: justify;
 }
 
 section.downloads {
@@ -225,10 +252,16 @@ section.downloads {
             transition: box-shadow 0.15s;
             font-weight: 300;
             font-size: 12px;
+            cursor: pointer;
 
-            img {
-                margin-right: 10px;
-                margin-top: 0px;
+            picture {
+                display: inline;
+
+                img {
+                    width: 30px;
+                    margin-right: 5px;
+                    margin-top: 0px;
+                }
             }
         }
 
@@ -242,7 +275,8 @@ section.downloads {
 
 } /** end / section.downloads */
 
-section.register {
+section.register,
+section.contact {
     background: #006699;
 
     h1 {
@@ -264,11 +298,12 @@ section.register {
                 display: block;
                 color: white;
                 font-weight: 500;
-
+                margin-top: 8px;
             }
 
             input,
-            select {
+            select,
+            textarea {
                 display: block;
                 background: white;
                 width: 100%;
@@ -282,9 +317,118 @@ section.register {
 
         }
 
+        button {
+            width: 100%;
+            padding: 10px 20px;
+            color: white;
+            font-weight: bold;
+            cursor: pointer;
+            background: #fcb813;
+            border: 1px solid rgb(230, 230, 230);
+                box-shadow: 0 0px 4px rgba(0,0,0,0.09),
+                    0 0px 2px rgba(0,0,0,0.09);
+            border-radius: 10px;
+            margin-top: 20px;
+        }
+
     }
 
 } /** end / .register */
+
+section.contact {
+    background: transparent;
+
+    h1 {
+        color: black;
+    }
+
+    form {
+
+        div.form-control {
+
+
+            label {
+                color: rgb(30, 30, 30);
+            }
+
+            input,
+            select,
+            textarea {
+                background: rgb(230, 230, 230);
+            }
+        }
+
+        button {
+            background: #669900;
+        }
+    }
+}
+
+section.thematic-groups {
+
+    ul, li {
+        list-style: none;
+        margin: 0;
+        padding: 0;
+
+        div.ball {
+            display: inline-block;
+            background: #fcb813;
+            width: 10px;
+            height: 10px;
+            border-radius: 10px;
+            margin-top: -10px;
+        }
+    }
+
+    ul.main {
+        > li {
+            margin-bottom: 16px;
+            > span {
+                font-weight: bold;
+            }
+
+            > ul {
+
+                > li {
+                    font-weight: 300;
+                    margin: 6px 0px;
+
+                    a {
+                        cursor: pointer;
+                        transition: font-weight 0.3s;
+                    }
+
+                    a:hover {
+                        font-weight: 500;
+                        transition: font-weight 0.6s;
+                    }
+
+                    > div {
+                        display: none;
+                        padding: 10px;
+                        background: rgb(246, 246, 246);
+
+                        p {
+                            margin: 0;
+                            padding: 0px;
+                        }
+
+                        p.coordinators {
+                            margin-bottom: 6px;
+                            font-weight: 600;
+                        }
+                    }
+
+                    > div.open {
+                        display: block;
+                    }
+                }
+            }
+        }
+    }
+
+}
 
 /* Extra small */
 @media only screen and (min-width : 480px) {
@@ -310,6 +454,66 @@ section.register {
         }
 
     } /** end / section.logo */
+
+    section.downloads {
+
+        nav {
+            flex-direction: row;
+            padding: 0;
+            margin-left: -10px;
+            margin-right: -10px;
+
+            a {
+                flex-grow: 0;
+                background: white;
+                border: 0;
+                width: calc(100% / 5);
+                margin: 0;
+                padding: 0 10px;
+                text-align: center;
+                font-size: 15px;
+                line-height: 18px;
+
+                picture {
+
+                    img {
+                        display: block;
+                        width: 100%;
+                        margin-bottom: 10px;
+                        transition: transform 0.3s;
+                    }
+
+                }
+
+            }
+
+            a:hover {
+                box-shadow:none;
+                transition: none;
+
+                img {
+                    transform: rotateZ(-16deg);
+                    font-weight: 600;
+                    transition: transform 0.6s;
+                }
+            }
+
+        }
+
+    } /** end / section.downloads */
+
+    nav.main {
+        display: flex;
+        flex-direction: row;
+
+        a {
+            display: block;
+            // display: flex;
+            // // width: calc(100% / 4);
+        }
+
+    } /** end / nav */
+
 
 }
 
