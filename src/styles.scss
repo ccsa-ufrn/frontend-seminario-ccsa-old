@@ -124,7 +124,7 @@ body.menu {
 /** END / BODY DEFINITIONs */
 
 
-section, nav {
+section {
     padding: 20px 0px;
 }
 
@@ -428,18 +428,47 @@ section.thematic-groups {
         }
     }
 
-}
+} /** end / section.** */
 
-/* Extra small */
-@media only screen and (min-width : 480px) {
+section.support {
+    border-top: 3px solid #fcb813;
 
+    div.support-container {
+        display: flex;
+
+        div.item {
+
+            h1 {
+                font-size: 12px;
+                letter-spacing: 0px;
+                color: rgb(160, 160, 160);
+            }
+
+            img {
+                margin-right: 20px;
+            }
+
+        }
+     }
+} /** end / support */
+
+footer {
+    background: #fcb813;
+    padding: 20px 0px;
+    font-weight: 600;
+    color: white !important;
+
+    a {
+        color: white !important;
+        text-decoration: none;
+    }
 }
 
 /* Small */
 @media only screen and (min-width : 768px) {
 
-    section, nav {
-        margin: 40px 0px;
+    section {
+        margin: 20px 0px;
     }
 
     section.logo {
@@ -505,15 +534,81 @@ section.thematic-groups {
     nav.main {
         display: flex;
         flex-direction: row;
+        margin: 20px -5px;
 
         a {
             display: block;
-            // display: flex;
-            // // width: calc(100% / 4);
+            text-align: center;
+            width: calc(100% / 4);
+            height: 60px;
+            margin: 5px;
+            color: white !important;
+            border-radius: 10px;
+            font-size: 20px;
+            padding-top: 14px;
+            cursor: pointer;
+            transition: font-size 0.3s;
+        }
+
+        a:hover {
+            font-size: 26px;
+            transition: font-size 0.6s;
+        }
+
+        a.green {
+            background-color: #669900;
+        }
+
+        a.yellow {
+            background-color: #fcb813;
+        }
+
+        a.blue {
+            background-color: #006699;
         }
 
     } /** end / nav */
 
+    section.news {
+
+        div.news {
+
+            position: relative;
+            padding-top:50px;
+
+            span.mark {
+                display: block;
+                position: absolute;
+                top: 5px;
+                font-size: 24px;
+                line-height: 24px;
+                border-left: 4px solid #006699;
+                padding: 0;
+                padding-left: 5px;
+            }
+
+            h1 {
+                font-size: 16px;
+                font-weight: 600;
+                line-height: 22px;
+                letter-spacing:0px;
+            }
+
+            p {
+
+            }
+        }
+
+        div.news.marked {
+            p {
+                background: #006699;
+                padding: 10px;
+                border-radius: 10px;
+                color: white !important;
+            }
+        }
+
+    }
 
 }
 
