@@ -77,7 +77,7 @@
     </div>
 </header>
 
-<main>
+<main #mainContainer>
 
     <section class="logo">
         <div class="container">
@@ -108,8 +108,8 @@
                 <nav class="main">
                     <a class="green" >Programação</a>
                     <a class="green">Downloads</a>
-                    <a class="blue" >Inscreva-se</a>
-                    <a class="yellow" >Acessar</a>
+                    <a class="blue">Inscreva-se</a>
+                    <a class="yellow" (click)="_openLogin()" (keypress.enter)="_openLogin()" >Acessar</a>
                 </nav>
             </div>
         </div>
@@ -192,7 +192,7 @@
                 <div class="col-md-12">
                     <h1>DOWNLOADS</h1>
                     <nav>
-                        <a>
+                        <a href="assets/download/Normas.docx" target="_blank">
                             <picture> <!-- greater size to lower size -->
                                 <source srcset="assets/download_01.png" media="(min-width: 768px)">
                                 <source srcset="assets/download_01_mobile.png" media="(min-width: 0px)">
@@ -200,7 +200,7 @@
                             </picture>
                             Normas
                         </a>
-                        <a>
+                        <a href="assets/download/template.poster.zip" target="_blank">
                             <picture> <!-- greater size to lower size -->
                                 <source srcset="assets/download_02.png" media="(min-width: 768px)">
                                 <source srcset="assets/download_02_mobile.png" media="(min-width: 0px)">
@@ -208,7 +208,7 @@
                             </picture>
                             Template para Pôster
                         </a>
-                        <a>
+                        <a href="assets/download/template.comunicao.oral.texto.zip" target="_blank">
                             <picture> <!-- greater size to lower size -->
                                 <source srcset="assets/download_02.png" media="(min-width: 768px)">
                                 <source srcset="assets/download_02_mobile.png" media="(min-width: 0px)">
@@ -216,7 +216,7 @@
                             </picture>
                             Template para Comunicação Oral
                         </a>
-                        <a>
+                        <a href="assets/download/template.poster.zip" target="_blank">
                             <picture> <!-- greater size to lower size -->
                                 <source srcset="assets/download_02.png" media="(min-width: 768px)">
                                 <source srcset="assets/download_02_mobile.png" media="(min-width: 0px)">
@@ -306,52 +306,83 @@
         <div class="container">
             <div class="row">
                 <div class="col-md-12">
-                    <h1>INSCRIÇÕES <span>ATÉ 7 DE MAIO</span></h1>
+                    <h1 id="s-inscription">INSCRIÇÕES <span>ATÉ 7 DE MAIO</span></h1>
 
-                    <form>
+                    <form [formGroup]="_registerForm" (ngSubmit)="_register($event)" novalidate>
                         <div class="form-control">
                             <label>NOME:</label>
-                            <input placeholder="Nome Completo">
+                            <input placeholder="Nome Completo" formControlName="name">
+
+                            <div *ngIf="_registerForm.get('name').errors && (_registerForm.get('name').dirty || _registerForm.get('name').touched)">
+                                <p [hidden]="!_registerForm.get('name').hasError('required')">É obrigatório</p>
+                            </div>
                         </div>
 
                         <div class="form-control">
                             <label>EMAIL:</label>
-                            <input placeholder="Email">
+                            <input placeholder="Email" formControlName="mail">
+
+                            <div *ngIf="_registerForm.get('mail').errors && (_registerForm.get('mail').dirty || _registerForm.get('mail').touched)">
+                                <p [hidden]="!_registerForm.get('mail').hasError('required')">É obrigatório</p>
+                            </div>
                         </div>
 
                         <div class="form-control">
                             <label>CPF:</label>
-                            <input placeholder="CPF">
+                            <input placeholder="CPF" formControlName="cpf">
+
+                            <div *ngIf="_registerForm.get('cpf').errors && (_registerForm.get('cpf').dirty || _registerForm.get('cpf').touched)">
+                                <p [hidden]="!_registerForm.get('cpf').hasError('required')">É obrigatório</p>
+                            </div>
                         </div>
 
                         <div class="form-control">
                             <label>CATEGORIA:</label>
-                            <select placeholder="Categoria">
+                            <select placeholder="Categoria" formControlName="category">
                                 <option value="student">Discente</option>
                                 <option value="instructor">Docente/Técnico-Administrativo</option>
                                 <option value="noacademic">Sem vínculo acadêmico</option>
                             </select>
 
+                            <div *ngIf="_registerForm.get('category').errors && (_registerForm.get('category').dirty || _registerForm.get('category').touched)">
+                                <p [hidden]="!_registerForm.get('category').hasError('required')">É obrigatório</p>
+                            </div>
                         </div>
 
                         <div class="form-control">
                             <label>INSTITUIÇÃO:</label>
-                            <input placeholder="Instituição">
+                            <input placeholder="Instituição" formControlName="institution">
+
+                            <div *ngIf="_registerForm.get('institution').errors && (_registerForm.get('institution').dirty || _registerForm.get('institution').touched)">
+                                <p [hidden]="!_registerForm.get('institution').hasError('required')">É obrigatório</p>
+                            </div>
                         </div>
 
                         <div class="form-control">
                             <label>TELEFONE:</label>
-                            <input placeholder="Telefone">
+                            <input placeholder="Telefone" formControlName="phone">
+
+                            <div *ngIf="_registerForm.get('phone').errors && (_registerForm.get('phone').dirty || _registerForm.get('phone').touched)">
+                                <p [hidden]="!_registerForm.get('phone').hasError('required')">É obrigatório</p>
+                            </div>
                         </div>
 
                         <div class="form-control">
                             <label>SENHA:</label>
-                            <input placeholder="Senha">
+                            <input type="password" placeholder="Senha" formControlName="password">
+
+                            <div *ngIf="_registerForm.get('password').errors && (_registerForm.get('password').dirty || _registerForm.get('password').touched)">
+                                <p [hidden]="!_registerForm.get('password').hasError('required')">É obrigatório</p>
+                            </div>
                         </div>
 
                         <div class="form-control">
                             <label>CONFIRMAR SENHA:</label>
-                            <input placeholder="Confirmar Senha">
+                            <input type="password"  placeholder="Confirmar Senha" formControlName="repeatPassword">
+
+                            <div *ngIf="_registerForm.get('repeatPassword').errors && (_registerForm.get('repeatPassword').dirty || _registerForm.get('repeatPassword').touched)">
+                                <p [hidden]="!_registerForm.get('repeatPassword').hasError('required')">É obrigatório</p>
+                            </div>
                         </div>
 
                         <button type="submit">CONFIRMAR</button>
@@ -376,25 +407,41 @@
                 <div class="col-md-12">
                     <h1>CONTATO</h1>
 
-                    <form [formGroup]="_contactForm">
+                    <form [formGroup]="_contactForm" (ngSubmit)="_sendMessage($event)" novalidate>
                         <div class="form-control">
                             <label>NOME:</label>
                             <input placeholder="Nome Completo" formControlName="name">
+
+                            <div *ngIf="_contactForm.get('name').errors && (_contactForm.get('name').dirty || _contactForm.get('name').touched)">
+                                <p [hidden]="!_contactForm.get('name').hasError('required')">É obrigatório</p>
+                            </div>
                         </div>
 
                         <div class="form-control">
                             <label>EMAIL:</label>
                             <input placeholder="Email" formControlName="mail">
+
+                            <div *ngIf="_contactForm.get('mail').errors && (_contactForm.get('mail').dirty || _contactForm.get('mail').touched)">
+                                <p [hidden]="!_contactForm.get('mail').hasError('required')">É obrigatório</p>
+                            </div>
                         </div>
 
                         <div class="form-control">
                             <label>ASSUNTO:</label>
                             <input placeholder="Assunto" formControlName="subject">
+
+                            <div *ngIf="_contactForm.get('subject').errors && (_contactForm.get('subject').dirty || _contactForm.get('subject').touched)">
+                                <p [hidden]="!_contactForm.get('subject').hasError('required')">É obrigatório</p>
+                            </div>
                         </div>
 
                         <div class="form-control">
                             <label>MENSAGEM:</label>
                             <textarea placeholder="Mensagem" formControlName="message"></textarea>
+
+                            <div *ngIf="_contactForm.get('message').errors && (_contactForm.get('message').dirty || _contactForm.get('message').touched)">
+                                <p [hidden]="!_contactForm.get('message').hasError('required')">É obrigatório</p>
+                            </div>
                         </div>
 
                         <button type="submit">ENVIAR</button>

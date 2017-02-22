@@ -1,9 +1,11 @@
 import { Component, OnInit, ViewChild,
-    ElementRef, Renderer, NgZone } from '@angular/core';
+    ElementRef, Renderer, NgZone, Inject } from '@angular/core';
 import { DomHandler } from './dom-handler.service';
 import { GeralService, ThematicGroup, GT, News } from './geral.service';
 import { Observable } from 'rxjs/Rx';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { PageScrollService, PageScrollInstance } from 'ng2-page-scroll';
+import { DOCUMENT } from '@angular/platform-browser';
 
 @Component({
     selector: 'app-root',
@@ -23,12 +25,16 @@ export class AppComponent implements OnInit{
     private _registerForm: FormGroup;
     private _contactForm: FormGroup;
 
+
+
     constructor(
         private _domHandler: DomHandler,
         private _renderer: Renderer,
         private _ngZone: NgZone,
         private _geralService: GeralService,
-        private _formBuilder : FormBuilder
+        private _formBuilder : FormBuilder,
+        private pageScrollService : PageScrollService,
+        @Inject(DOCUMENT) private document: any
     ) {
         this._isLoginModalActive = false;
         this._gtsleft = [];
@@ -72,8 +78,15 @@ export class AppComponent implements OnInit{
             if(news.length > 0) {
                 this._markedNews = news[0];
 
+                if(this._markedNews)
+                this._markedNews.text =
+                    this._markedNews.text.substring(0, 200)+'...';
+
                 if(news[1]) this._othersNews.push(news[1]);
                 if(news[2]) this._othersNews.push(news[2]);
+
+                for(let i = 0; i < this._othersNews.length; ++i)
+                    this._othersNews[i].text = this._othersNews[i].text.substring(0, 260)+'...';
             }
         })
     }
@@ -126,6 +139,70 @@ export class AppComponent implements OnInit{
         }else
            this._domHandler.removeClass(document.querySelector('#'+a), 'open')
 
+    }
+
+    private _sendMessage(e) {
+        if(!this._contactForm.valid) {
+            for(let a in this._contactForm.controls){
+                this._contactForm.controls[a].markAsTouched();
+                this._contactForm.controls[a].markAsDirty();
+            }
+        } else {
+            this._geralService.sendMessage(this._contactForm.get('name').value,
+                this._contactForm.get('mail').value, this._contactForm.get('message').value,
+                this._contactForm.get('subject').value)
+                .subscribe((a) => {
+                    if(a.status === 'success') {
+                        alert('Mensagem enviada com sucesso.')
+                        this._contactForm.reset();
+                    } else {
+                        alert(a.message)
+                    }
+                })
+        }
+
+        return false;
+    }
+
+    private _register() {
+        if(!this._registerForm.valid) {
+            for(let a in this._registerForm.controls){
+                this._registerForm.controls[a].markAsTouched();
+                this._registerForm.controls[a].markAsDirty();
+            }
+        } else {
+            this._geralService.createUser(this._registerForm.get('name').value,
+            this._registerForm.get('mail').value, this._registerForm.get('cpf').value,
+            this._registerForm.get('category').value, this._registerForm.get('institution').value,
+            this._registerForm.get('phone').value, this._registerForm.get('password').value,
+            this._registerForm.get('repeatPassword').value)
+                .subscribe((a) => {
+                    if(a.status === 'success') {
+                        alert('Você foi cadastrado com sucesso!');
+                        this._registerForm.reset();
+                        this._openLogin();
+                    } else {
+                        alert(a.message)
+                    }
+                }, (e) => {
+                    alert(e.json().message)
+                })
+        }
+
+        return false;
+    }
+
+    @ViewChild('mainContainer')
+    private mainContainer: ElementRef;
+
+    @ViewChild('downloads')
+    private downloads: ElementRef;
+
+    private _gotToDownloads() {
+        console.log(this.downloads)
+        let pageScrollInstance: PageScrollInstance =
+            PageScrollInstance.simpleInlineInstance(this.document, this.downloads.nativeElement, this.mainContainer.nativeElement);
+        this.pageScrollService.start(pageScrollInstance);
     }
 
 }
