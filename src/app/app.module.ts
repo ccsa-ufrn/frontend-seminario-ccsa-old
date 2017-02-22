@@ -1,6 +1,6 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpModule } from '@angular/http';
 import { GeralService } from './geral.service';
 import { AppComponent } from './app.component';
@@ -11,8 +11,9 @@ import { AppComponent } from './app.component';
   ],
   imports: [
     BrowserModule,
+    HttpModule,
     FormsModule,
-    HttpModule
+    ReactiveFormsModule
   ],
   providers: [GeralService],
   bootstrap: [AppComponent]

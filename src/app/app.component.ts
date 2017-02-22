@@ -1,8 +1,9 @@
 import { Component, OnInit, ViewChild,
     ElementRef, Renderer, NgZone } from '@angular/core';
 import { DomHandler } from './dom-handler.service';
-import { GeralService, ThematicGroup, GT } from './geral.service';
+import { GeralService, ThematicGroup, GT, News } from './geral.service';
 import { Observable } from 'rxjs/Rx';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 @Component({
     selector: 'app-root',
@@ -16,16 +17,44 @@ export class AppComponent implements OnInit{
     private _isLoginModalActive: boolean;
     private _gtsleft: Array<ThematicGroup>;
     private _gtsright: Array<ThematicGroup>;
+    private _markedNews: News;
+    private _othersNews: Array<News>;
+
+    private _registerForm: FormGroup;
+    private _contactForm: FormGroup;
 
     constructor(
         private _domHandler: DomHandler,
         private _renderer: Renderer,
         private _ngZone: NgZone,
-        private _geralService: GeralService
+        private _geralService: GeralService,
+        private _formBuilder : FormBuilder
     ) {
         this._isLoginModalActive = false;
         this._gtsleft = [];
         this._gtsright = [];
+        this._markedNews = { title: '', text: '', created_at: ''};
+        this._othersNews = [];
+
+        /** REGISTER FORM */
+        this._registerForm = this._formBuilder.group({
+            name: ['', Validators.compose([Validators.required]) ],
+            mail: ['', Validators.compose([Validators.required]) ],
+            cpf: ['', Validators.compose([Validators.required]) ],
+            category: ['', Validators.compose([Validators.required]) ],
+            institution: ['', Validators.compose([Validators.required]) ],
+            phone: ['', Validators.compose([Validators.required]) ],
+            password: ['', Validators.compose([Validators.required]) ],
+            repeatPassword: ['', Validators.compose([Validators.required]) ],
+        });
+
+        /** CONTACT FORM */
+        this._contactForm = this._formBuilder.group({
+            name: ['', Validators.compose([Validators.required]) ],
+            mail: ['', Validators.compose([Validators.required]) ],
+            subject: ['', Validators.compose([Validators.required]) ],
+            message: ['', Validators.compose([Validators.required]) ]
+        });
     }
 
     ngOnInit() {
@@ -37,6 +66,16 @@ export class AppComponent implements OnInit{
             for( ; i < gts.length; ++i)
                 this._gtsright.push(gts[i]);
         });
+
+        this._geralService.getNews()
+        .subscribe((news: Array<News>) => {
+            if(news.length > 0) {
+                this._markedNews = news[0];
+
+                if(news[1]) this._othersNews.push(news[1]);
+                if(news[2]) this._othersNews.push(news[2]);
+            }
+        })
     }
 
     private toggleMenu() {
