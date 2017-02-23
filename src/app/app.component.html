@@ -33,9 +33,11 @@
 
                     <div class="login" *ngIf="_isLoginModalActive">
                         <div class="l">
-                            <input #mailInput type="text" placeholder="Email">
-                            <input type="password" placeholder="Senha">
-                            <button type="submit">LOGIN</button>
+                            <form [formGroup]="_loginForm" (ngSubmit)="_login($event)" novalidate>
+                                <input #mailInput placeholder="Email" formControlName="mail">
+                                <input type="password" placeholder="Senha" formControlName="password">
+                                <button type="submit" style="cursor: pointer;">LOGIN</button>
+                            </form>
                         </div>
                         <div class="forgot">
                             <a href>Esqueci a senha</a>

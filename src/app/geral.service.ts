@@ -25,13 +25,16 @@ export class GeralService {
 
     constructor(private _http: Http) { }
 
+    // host : string = 'http://localhost/seminario-ccsa-old';
+    host : string = 'https://seminario.ccsa.ufrn.br';
+
     public getGts(): Observable<Array<ThematicGroup>> {
-        return this._http.get(`https://seminario.ccsa.ufrn.br/index.php/api/tgs`)
+        return this._http.get(`${this.host}/api/tgs`)
             .map((res: any) => { return res.json().data });
     }
 
     public getNews(): Observable<Array<News>> {
-        return this._http.get(`https://seminario.ccsa.ufrn.br/index.php/api/news`)
+        return this._http.get(`${this.host}/api/news`)
             .map((res: any) => { return res.json().data });
     }
 
@@ -41,7 +44,7 @@ export class GeralService {
         body.set('email', email);
         body.set('subject', subject);
         body.set('message', message);
-        return this._http.post(`https://seminario.ccsa.ufrn.br/index.php/api/message`, body)
+        return this._http.post(`${this.host}/api/message`, body)
             .map((res: any) => { return res.json() });;
     }
 
@@ -57,7 +60,15 @@ export class GeralService {
         body.set('phone', phone);
         body.set('pass', password);
         body.set('pass-repeate', repassword);
-        return this._http.post(`https://seminario.ccsa.ufrn.br/index.php/api/new_user`, body)
+        return this._http.post(`${this.host}/api/new_user`, body)
+            .map((res: any) => { return res.json() });;
+    }
+
+    public login(email: string, password: string): Observable<any> {
+        let body = new URLSearchParams();
+        body.set('pass', password);
+        body.set('email', email);
+        return this._http.post(`${this.host}/api/login`, body)
             .map((res: any) => { return res.json() });;
     }
 

@@ -126,10 +126,12 @@ export class AppComponent implements OnInit{
     private _openLogin() {
         this._isLoginModalActive = !this._isLoginModalActive;
 
-        this._ngZone.onMicrotaskEmpty.subscribe(() => {
-            if(this._isLoginModalActive)
+        this._ngZone.onMicrotaskEmpty.first().subscribe(() => {
+            if(this._isLoginModalActive) {
                 this._renderer.invokeElementMethod(
                     this._mailInput.nativeElement, 'focus');
+                    console.log('a')
+            }
         });
     }
 
@@ -180,7 +182,21 @@ export class AppComponent implements OnInit{
     }
 
     private _login() {
-        // code here
+        if(!this._loginForm.valid) {
+            alert('Preencha todos os campos necessários.');
+        } else {
+            this._geralService.login(this._loginForm.get('mail').value,
+                this._loginForm.get('password').value)
+                .subscribe((a) => {
+                    if(a.status === 'success') {
+                        window.location.href = 'https://seminario.ccsa.ufrn.br/dashboard';
+                    } else {
+                        alert(a.message)
+                    }
+                }, (e) => {
+                    alert(e.json().message)
+                })
+        }
     }
 
     private _register() {
