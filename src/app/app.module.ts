@@ -5,7 +5,6 @@ import { HttpModule } from '@angular/http';
 import { GeralService } from './geral.service';
 import { AppComponent } from './app.component';
 import { RouterModule } from '@angular/router';
-import {Ng2PageScrollModule} from 'ng2-page-scroll';
 
 @NgModule({
   declarations: [
@@ -15,8 +14,7 @@ import {Ng2PageScrollModule} from 'ng2-page-scroll';
     BrowserModule,
     HttpModule,
     FormsModule,
-    ReactiveFormsModule,
-    Ng2PageScrollModule.forRoot()
+    ReactiveFormsModule
   ],
   providers: [GeralService],
   bootstrap: [AppComponent]

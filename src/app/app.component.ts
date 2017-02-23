@@ -4,8 +4,8 @@ import { DomHandler } from './dom-handler.service';
 import { GeralService, ThematicGroup, GT, News } from './geral.service';
 import { Observable } from 'rxjs/Rx';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { PageScrollService, PageScrollInstance } from 'ng2-page-scroll';
-import { DOCUMENT } from '@angular/platform-browser';
+
+declare var jQuery:any;
 
 @Component({
     selector: 'app-root',
@@ -21,10 +21,9 @@ export class AppComponent implements OnInit{
     private _gtsright: Array<ThematicGroup>;
     private _markedNews: News;
     private _othersNews: Array<News>;
-
     private _registerForm: FormGroup;
     private _contactForm: FormGroup;
-
+    private _loginForm: FormGroup;
 
 
     constructor(
@@ -32,9 +31,7 @@ export class AppComponent implements OnInit{
         private _renderer: Renderer,
         private _ngZone: NgZone,
         private _geralService: GeralService,
-        private _formBuilder : FormBuilder,
-        private pageScrollService : PageScrollService,
-        @Inject(DOCUMENT) private document: any
+        private _formBuilder : FormBuilder
     ) {
         this._isLoginModalActive = false;
         this._gtsleft = [];
@@ -61,6 +58,12 @@ export class AppComponent implements OnInit{
             subject: ['', Validators.compose([Validators.required]) ],
             message: ['', Validators.compose([Validators.required]) ]
         });
+
+        /** LOGIN FORM */
+        this._loginForm = this._formBuilder.group({
+            mail: ['', Validators.compose([Validators.required]) ],
+            password: ['', Validators.compose([Validators.required]) ]
+        })
     }
 
     ngOnInit() {
@@ -89,6 +92,18 @@ export class AppComponent implements OnInit{
                     this._othersNews[i].text = this._othersNews[i].text.substring(0, 260)+'...';
             }
         })
+    }
+
+    private loginFromMenu() {
+        this.toggleMenu();
+        this._openLogin();
+    }
+
+    private goToFromMenu(selector: string) {
+        this.toggleMenu();
+        setTimeout(() => {
+            this._gotTo(selector);
+        }, 600);
     }
 
     private toggleMenu() {
@@ -164,6 +179,10 @@ export class AppComponent implements OnInit{
         return false;
     }
 
+    private _login() {
+        // code here
+    }
+
     private _register() {
         if(!this._registerForm.valid) {
             for(let a in this._registerForm.controls){
@@ -198,11 +217,10 @@ export class AppComponent implements OnInit{
     @ViewChild('downloads')
     private downloads: ElementRef;
 
-    private _gotToDownloads() {
-        console.log(this.downloads)
-        let pageScrollInstance: PageScrollInstance =
-            PageScrollInstance.simpleInlineInstance(this.document, this.downloads.nativeElement, this.mainContainer.nativeElement);
-        this.pageScrollService.start(pageScrollInstance);
+    private _gotTo(selector: string) {
+        $('main').stop()
+            .animate({ scrollTop: $(selector)
+            .offset().top-120 }, 600, 'swing');
     }
 
 }

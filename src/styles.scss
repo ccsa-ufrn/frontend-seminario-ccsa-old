@@ -3,6 +3,10 @@
 * { font-family: 'Roboto', sans-serif; }
 .text-right { text-align: right; }
 
+body, html {
+    height: auto;
+}
+
 div.pattern1 {
     height: 20px;
     width: 100%;
@@ -471,8 +475,16 @@ footer {
     }
 }
 
+.hidden-md-down {
+    display: none;
+}
+
 /* Small */
 @media only screen and (min-width : 768px) {
+
+    .hidden-md-down{
+         display: block;
+    }
 
     .open-menu-mobile {
         display: none;
