@@ -31,7 +31,7 @@
                         (click)="_openLogin()"
                         (keypress.enter)="_openLogin()">ENTRAR</a>
 
-                    <div class="login" *ngIf="_isLoginModalActive">
+                    <div class="login" [ngClass]="{'open': _isLoginModalActive}">
                         <div class="l">
                             <form [formGroup]="_loginForm" (ngSubmit)="_login($event)" novalidate>
                                 <input #mailInput placeholder="Email" formControlName="mail">
@@ -81,8 +81,8 @@
             <div class="row">
                 <div class="col-12">
                     <picture> <!-- greater size to lower size -->
-                        <source srcset="assets/marca.png" media="(min-width: 768px)">
-                        <source srcset="assets/marca_mobile.png" media="(min-width: 0px)">
+                        <source srcset="assets/ng2/marca.png" media="(min-width: 768px)">
+                        <source srcset="assets/ng2/marca_mobile.png" media="(min-width: 0px)">
                         <img width="100%" alt="Marca - Seminário de Pesquisa do CCSA">
                     </picture>
                 </div>
@@ -157,6 +157,7 @@
                     <h1>NOTÍCIAS</h1>
                 </div>
             </div>
+            <a (click)="_toggleNewsModal()" (keypress.enter)="_toggleNewsModal()" style="cursor: pointer;">
             <div class="row">
                 <div class="col-md-4">
                     <div class="news marked">
@@ -172,6 +173,7 @@
                     </div>
                 </div>
             </div>
+            </a>
         </div>
     </section>
 
@@ -189,42 +191,42 @@
                 <div class="col-md-12">
                     <h1 id="s-downloads">DOWNLOADS</h1>
                     <nav>
-                        <a href="assets/download/Normas.docx" target="_blank">
+                        <a href="assets/ng2/download/Normas.docx" target="_blank">
                             <picture> <!-- greater size to lower size -->
-                                <source srcset="assets/download_01.png" media="(min-width: 768px)">
-                                <source srcset="assets/download_01_mobile.png" media="(min-width: 0px)">
+                                <source srcset="assets/ng2/download_01.png" media="(min-width: 768px)">
+                                <source srcset="assets/ng2/download_01_mobile.png" media="(min-width: 0px)">
                                 <img alt="Marca - Seminário de Pesquisa do CCSA">
                             </picture>
                             Normas
                         </a>
-                        <a href="assets/download/template.poster.zip" target="_blank">
+                        <a href="assets/ng2/download/template.poster.zip" target="_blank">
                             <picture> <!-- greater size to lower size -->
-                                <source srcset="assets/download_02.png" media="(min-width: 768px)">
-                                <source srcset="assets/download_02_mobile.png" media="(min-width: 0px)">
+                                <source srcset="assets/ng2/download_02.png" media="(min-width: 768px)">
+                                <source srcset="assets/ng2/download_02_mobile.png" media="(min-width: 0px)">
                                 <img alt="Marca - Seminário de Pesquisa do CCSA">
                             </picture>
                             Template para Pôster
                         </a>
-                        <a href="assets/download/template.comunicao.oral.texto.zip" target="_blank">
+                        <a href="assets/ng2/download/template.comunicao.oral.texto.zip" target="_blank">
                             <picture> <!-- greater size to lower size -->
-                                <source srcset="assets/download_02.png" media="(min-width: 768px)">
-                                <source srcset="assets/download_02_mobile.png" media="(min-width: 0px)">
+                                <source srcset="assets/ng2/download_02.png" media="(min-width: 768px)">
+                                <source srcset="assets/ng2/download_02_mobile.png" media="(min-width: 0px)">
                                 <img alt="Marca - Seminário de Pesquisa do CCSA">
                             </picture>
                             Template para Comunicação Oral
                         </a>
-                        <a href="assets/download/template.poster.zip" target="_blank">
+                        <a href="assets/ng2/download/template.poster.zip" target="_blank">
                             <picture> <!-- greater size to lower size -->
-                                <source srcset="assets/download_02.png" media="(min-width: 768px)">
-                                <source srcset="assets/download_02_mobile.png" media="(min-width: 0px)">
+                                <source srcset="assets/ng2/download_02.png" media="(min-width: 768px)">
+                                <source srcset="assets/ng2/download_02_mobile.png" media="(min-width: 0px)">
                                 <img alt="Marca - Seminário de Pesquisa do CCSA">
                             </picture>
                             Template para Casos para Ensino
                         </a>
                         <a>
                             <picture> <!-- greater size to lower size -->
-                                <source srcset="assets/download_01.png" media="(min-width: 768px)">
-                                <source srcset="assets/download_01_mobile.png" media="(min-width: 0px)">
+                                <source srcset="assets/ng2/download_01.png" media="(min-width: 768px)">
+                                <source srcset="assets/ng2/download_01_mobile.png" media="(min-width: 0px)">
                                 <img alt="Marca - Seminário de Pesquisa do CCSA">
                             </picture>
                             Programação
@@ -382,7 +384,7 @@
                             </div>
                         </div>
 
-                        <button type="submit">CONFIRMAR</button>
+                        <button type="submit" [disabled]="isInscriptionProcessing">{{ isInscriptionProcessing ? 'CARREGANDO' : 'INSCREVER-SE' }}</button>
                     </form>
 
                 </div>
@@ -457,8 +459,8 @@
                         <div class="item">
                             <h1>REALIZAÇÃO</h1>
                             <div class="support-container">
-                                <img src="assets/ufrn.png">
-                                <img src="assets/ccsa.png">
+                                <img src="assets/ng2/ufrn.png">
+                                <img src="assets/ng2/ccsa.png">
                             </div>
                         </div>
                         <div class="item">
@@ -481,3 +483,22 @@
     </footer>
 
 </main>
+
+<div class="modal-news" [ngClass]="{'open': _isNewsModalOpen}" >
+    <div class="container-all">
+        <div class="header">
+            NOTÍCIAS
+            <a (click)="_toggleNewsModal()" (keypress.enter)="_toggleNewsModal()">FECHAR</a>
+        </div>
+        <div class="container-modal">
+
+            <ul>
+                <li *ngFor="let n of _allNews">
+                    <h1>{{ n.title }}</h1>
+                    <p [innerHTML]="n.text"></p>
+                </li>
+            </ul>
+
+        </div>
+    </div>
+</div>

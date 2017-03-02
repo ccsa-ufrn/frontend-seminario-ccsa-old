@@ -5,14 +5,14 @@ import { GeralService, ThematicGroup, GT, News } from './geral.service';
 import { Observable } from 'rxjs/Rx';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
-declare var jQuery:any;
+declare var jQuery: any;
 
 @Component({
     selector: 'app-root',
     templateUrl: './app.component.html',
     providers: [DomHandler]
 })
-export class AppComponent implements OnInit{
+export class AppComponent implements OnInit {
 
     @ViewChild('mailInput')
     private _mailInput: ElementRef;
@@ -24,7 +24,8 @@ export class AppComponent implements OnInit{
     private _registerForm: FormGroup;
     private _contactForm: FormGroup;
     private _loginForm: FormGroup;
-
+    private _allNews: Array<News>;
+    private _isNewsModalOpen: boolean;
 
     constructor(
         private _domHandler: DomHandler,
@@ -34,10 +35,12 @@ export class AppComponent implements OnInit{
         private _formBuilder : FormBuilder
     ) {
         this._isLoginModalActive = false;
+        this._isNewsModalOpen = false;
         this._gtsleft = [];
         this._gtsright = [];
         this._markedNews = { title: '', text: '', created_at: ''};
         this._othersNews = [];
+        this._allNews = [];
 
         /** REGISTER FORM */
         this._registerForm = this._formBuilder.group({
@@ -79,17 +82,19 @@ export class AppComponent implements OnInit{
         this._geralService.getNews()
         .subscribe((news: Array<News>) => {
             if(news.length > 0) {
-                this._markedNews = news[0];
+                this._markedNews = Object.assign({}, news[0]);
 
                 if(this._markedNews)
                 this._markedNews.text =
                     this._markedNews.text.substring(0, 200)+'...';
 
-                if(news[1]) this._othersNews.push(news[1]);
-                if(news[2]) this._othersNews.push(news[2]);
+                if(news[1]) this._othersNews.push(Object.assign({}, news[1]));
+                if(news[2]) this._othersNews.push(Object.assign({}, news[2]));
 
                 for(let i = 0; i < this._othersNews.length; ++i)
                     this._othersNews[i].text = this._othersNews[i].text.substring(0, 260)+'...';
+
+                this._allNews = news;
             }
         })
     }
@@ -181,6 +186,10 @@ export class AppComponent implements OnInit{
         return false;
     }
 
+    private _toggleNewsModal() {
+        this._isNewsModalOpen = !this._isNewsModalOpen;
+    }
+
     private _login() {
         if(!this._loginForm.valid) {
             alert('Preencha todos os campos necessários.');
@@ -199,6 +208,8 @@ export class AppComponent implements OnInit{
         }
     }
 
+    private isInscriptionProcessing: boolean = false;
+
     private _register() {
         if(!this._registerForm.valid) {
             for(let a in this._registerForm.controls){
@@ -206,6 +217,7 @@ export class AppComponent implements OnInit{
                 this._registerForm.controls[a].markAsDirty();
             }
         } else {
+            this.isInscriptionProcessing = true;
             this._geralService.createUser(this._registerForm.get('name').value,
             this._registerForm.get('mail').value, this._registerForm.get('cpf').value,
             this._registerForm.get('category').value, this._registerForm.get('institution').value,
@@ -219,8 +231,10 @@ export class AppComponent implements OnInit{
                     } else {
                         alert(a.message)
                     }
+                    this.isInscriptionProcessing = false;
                 }, (e) => {
                     alert(e.json().message)
+                    this.isInscriptionProcessing = false;
                 })
         }
 

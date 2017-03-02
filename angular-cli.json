@@ -25,7 +25,7 @@
                 "styles.scss"
             ],
             "scripts": [
-                "assets/picturefill.min.js",
+                "assets/ng2/picturefill.min.js",
                 "../node_modules/jquery/dist/jquery.min.js"
             ],
             "environments": {

@@ -25,8 +25,8 @@ export class GeralService {
 
     constructor(private _http: Http) { }
 
-    // host : string = 'http://localhost/seminario-ccsa-old';
-    host : string = 'https://seminario.ccsa.ufrn.br';
+    host : string = 'http://localhost/seminario-ccsa-old/index.php';
+    // host : string = 'https://seminario.ccsa.ufrn.br';
 
     public getGts(): Observable<Array<ThematicGroup>> {
         return this._http.get(`${this.host}/api/tgs`)

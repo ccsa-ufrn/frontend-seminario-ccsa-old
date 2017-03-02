@@ -10,19 +10,19 @@ body, html {
 div.pattern1 {
     height: 20px;
     width: 100%;
-    background: url(assets/pattern1.png)
+    background: url(assets/ng2/pattern1.png)
 }
 
 div.pattern2 {
     height: 20px;
     width: 100%;
-    background: url(assets/pattern2.png)
+    background: url(assets/ng2/pattern2.png)
 }
 
 div.pattern3 {
     height: 20px;
     width: 100%;
-    background: url(assets/pattern3.png)
+    background: url(assets/ng2/pattern3.png)
 }
 
 body {
@@ -161,6 +161,7 @@ header {
         div.login {
             overflow: hidden;
             position: absolute;
+            display: none;
             right: 0px;
             top: 36px;
             height: 186px;
@@ -202,9 +203,108 @@ header {
 
         }
 
+        @keyframes open-login {
+            from {
+                opacity: 0.6;
+            }
+            to {
+                opacity: 1;
+            }
+        }
+
+        div.login.open {
+            display: block;
+            animation: open-login;
+            animation-duration: 0.5s;
+        }
+
     } /** end / .login-container */
 
 } /** end / header */
+
+div.modal-news.open {
+    display: block;
+    animation: open-login;
+    animation-duration: 0.5s;
+}
+
+div.modal-news {
+    display: none;
+    // position: fixed;
+    // z-index: 100;
+    // top: 10%;
+    // left: 10%;
+    // width: 80%;
+    // height: 80%;
+    // background-color: white;
+    // box-shadow: 0 2px 4px rgba(0, 0, 0, 0.45);
+    position: fixed;
+    background: rgba(0, 0, 0, 0.6);
+    z-index: 99;
+    top:0;
+    bottom:0;
+    left:0;
+    right:0;
+
+    div.container-all {
+        margin-top: 10%;
+        margin-left: 10%;
+        width: 80%;
+        height: 80%;
+        background-color: white;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.45);
+    }
+
+    div.header {
+        height: 44px;
+        background: #006699;
+        color: white;
+        padding: 10px;
+
+        a {
+            font-weight: bold;
+            float: right;
+            cursor: pointer;
+        }
+
+        a:hover{
+            font-weight: 400;
+        }
+    }
+
+    div.container-modal {
+        height: calc(100% - 44px);
+        overflow-y: scroll;
+        padding: 20px;
+
+        ul, li {
+            margin: 0;
+            padding: 0;
+            list-style: none;
+
+            h1 {
+                border-left: 4px solid #669900;
+                padding-left: 10px;
+                font-weight: 400;
+                margin-top: 40px;
+                margin-bottom: 20px;
+            }
+        }
+
+        ul {
+            li:first-of-type {
+                h1 {
+                    margin-top: 0;
+                }
+
+            }
+        }
+
+
+
+    }
+}
+
 
 section.logo {
 
@@ -257,6 +357,8 @@ section.downloads {
             font-weight: 300;
             font-size: 12px;
             cursor: pointer;
+            color: black;
+            text-decoration: none;
 
             picture {
                 display: inline;
@@ -273,6 +375,7 @@ section.downloads {
             box-shadow: 0 0px 4px rgba(0,0,0,0.09),
                 0 0px 2px rgba(0,0,0,0.09);
             transition: box-shadow 0.3s;
+            font-weight: bold;
         }
 
     }
@@ -345,6 +448,47 @@ section.contact {
     }
 
 } /** end / .register */
+
+section.news {
+
+        div.news {
+
+            position: relative;
+            padding-top:50px;
+
+            span.mark {
+                display: block;
+                position: absolute;
+                top: 5px;
+                font-size: 24px;
+                line-height: 24px;
+                border-left: 4px solid #006699;
+                padding: 0;
+                padding-left: 5px;
+            }
+
+            h1 {
+                font-size: 16px;
+                font-weight: 600;
+                line-height: 22px;
+                letter-spacing:0px;
+            }
+
+            p {
+
+            }
+        }
+
+        div.news.marked {
+            p {
+                background: #006699;
+                padding: 10px;
+                border-radius: 10px;
+                color: white !important;
+            }
+        }
+
+    }
 
 section.contact {
     background: transparent;
