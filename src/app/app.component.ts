@@ -26,6 +26,7 @@ export class AppComponent implements OnInit {
     private _loginForm: FormGroup;
     private _allNews: Array<News>;
     private _isNewsModalOpen: boolean;
+    private _isDoingLogin: boolean;
 
     constructor(
         private _domHandler: DomHandler,
@@ -36,6 +37,7 @@ export class AppComponent implements OnInit {
     ) {
         this._isLoginModalActive = false;
         this._isNewsModalOpen = false;
+        this._isDoingLogin = false;
         this._gtsleft = [];
         this._gtsright = [];
         this._markedNews = { title: '', text: '', created_at: ''};
@@ -194,6 +196,7 @@ export class AppComponent implements OnInit {
         if(!this._loginForm.valid) {
             alert('Preencha todos os campos necessários.');
         } else {
+            this._isDoingLogin = true;
             this._geralService.login(this._loginForm.get('mail').value,
                 this._loginForm.get('password').value)
                 .subscribe((a) => {
@@ -202,8 +205,10 @@ export class AppComponent implements OnInit {
                     } else {
                         alert(a.message)
                     }
+                    this._isDoingLogin = false;
                 }, (e) => {
                     alert(e.json().message)
+                    this._isDoingLogin = false;
                 })
         }
     }

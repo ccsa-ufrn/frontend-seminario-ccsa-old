@@ -36,7 +36,10 @@
                             <form [formGroup]="_loginForm" (ngSubmit)="_login($event)" novalidate>
                                 <input #mailInput placeholder="Email" formControlName="mail">
                                 <input type="password" placeholder="Senha" formControlName="password">
-                                <button type="submit" style="cursor: pointer;">LOGIN</button>
+                                <button
+                                    type="submit"
+                                    style="cursor: pointer;"
+                                    [disabled]="_isDoingLogin">{{ _isDoingLogin ? 'AGUARDE...' : 'LOGIN' }}</button>
                             </form>
                         </div>
                         <div class="forgot">
@@ -215,7 +218,7 @@
                             </picture>
                             Template para Comunicação Oral
                         </a>
-                        <a href="assets/ng2/download/template.poster.zip" target="_blank">
+                        <a href="assets/ng2/download/template.caso.ensino.zip" target="_blank">
                             <picture> <!-- greater size to lower size -->
                                 <source srcset="assets/ng2/download_02.png" media="(min-width: 768px)">
                                 <source srcset="assets/ng2/download_02_mobile.png" media="(min-width: 0px)">
@@ -499,6 +502,23 @@
                 </li>
             </ul>
 
+        </div>
+    </div>
+</div>
+
+
+<div class="modal-reset-password">
+    <div class="container-all">
+        <div class="header">
+            RECUPERAÇÃO DE SENHA
+            <a (click)="_toggleResetPassModal()" (keypress.enter)="_toggleResetPassModal()">FECHAR</a>
+        </div>
+        <div class="container-modal">
+            <div class="form-control">
+                <label>EMAIL:</label>
+                <input placeholder="Assunto">
+            </div>
+            <button>RECUPERAR</button>
         </div>
     </div>
 </div>

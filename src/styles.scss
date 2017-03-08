@@ -260,13 +260,15 @@ header {
 
 } /** end / header */
 
-div.modal-news.open {
+div.modal-news.open,
+.modal-reset-password.open {
     display: block;
     animation: open-login;
     animation-duration: 0.5s;
 }
 
-div.modal-news {
+div.modal-news,
+.modal-reset-password {
     display: none;
     // position: fixed;
     // z-index: 100;
@@ -342,6 +344,14 @@ div.modal-news {
 
 
     }
+} /* end / modal.news */
+
+.modal-reset-password.open {
+
+    div.container-all {
+        height: 140px;
+    }
+
 }
 
 
