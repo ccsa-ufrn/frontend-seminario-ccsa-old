@@ -346,12 +346,34 @@ div.modal-news,
     }
 } /* end / modal.news */
 
-.modal-reset-password.open {
-
+.modal-reset-password {
     div.container-all {
-        height: 140px;
-    }
+        height: 114px;
+        max-width: 1140px;
+        left: 50%;
+        top: 50%;
+        transform: translateX(-50%) translatey(-50%);
+        box-sizing: border-box;
 
+        .container-modal {
+            overflow-y: hidden;
+        }
+
+        input {
+            width: calc(100% - 90px);
+            box-sizing: border-box;
+        }
+
+        button {
+            width: 80px;
+            box-sizing: border-box;
+        }
+
+    }
+}
+
+.modal-reset-password.open {
+    display: block;
 }
 
 

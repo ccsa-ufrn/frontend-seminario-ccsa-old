@@ -26,7 +26,9 @@ export class AppComponent implements OnInit {
     private _loginForm: FormGroup;
     private _allNews: Array<News>;
     private _isNewsModalOpen: boolean;
+    private _isResetPasswordOpen: boolean;
     private _isDoingLogin: boolean;
+    private _resetPasswordForm: FormGroup;
 
     constructor(
         private _domHandler: DomHandler,
@@ -68,6 +70,10 @@ export class AppComponent implements OnInit {
         this._loginForm = this._formBuilder.group({
             mail: ['', Validators.compose([Validators.required]) ],
             password: ['', Validators.compose([Validators.required]) ]
+        })
+
+        this._resetPasswordForm = this._formBuilder.group({
+            mail: ['', Validators.compose([Validators.required]) ]
         })
     }
 
@@ -190,6 +196,26 @@ export class AppComponent implements OnInit {
 
     private _toggleNewsModal() {
         this._isNewsModalOpen = !this._isNewsModalOpen;
+    }
+
+    private _toggleResetPasswordModal() {
+        this._isResetPasswordOpen = !this._isResetPasswordOpen;
+    }
+
+    private _resetPassword() {
+        if(!this._resetPasswordForm.valid) {
+            alert('Preencha todos os campos necessários.');
+        } else {
+            this._geralService.resetPass(this._resetPasswordForm.get('mail').value)
+            .subscribe((a) => {
+                if(a.status === 'success')
+                    alert('Instruções foram enviadas para o seu email.');
+            }, (e) => {
+                alert(e.json().message)
+                this._isDoingLogin = false;
+            })
+        }
+
     }
 
     private _login() {

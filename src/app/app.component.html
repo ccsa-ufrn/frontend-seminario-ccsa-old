@@ -43,7 +43,7 @@
                             </form>
                         </div>
                         <div class="forgot">
-                            <a href>Esqueci a senha</a>
+                            <a (click)="_toggleResetPasswordModal()" (keypress.enter)="_toggleResetPasswordModal()">Esqueci a senha</a>
                         </div>
                     </div>
                 </a>
@@ -507,18 +507,17 @@
 </div>
 
 
-<div class="modal-reset-password">
+<div class="modal-reset-password" [ngClass]="{'open': _isResetPasswordOpen}">
     <div class="container-all">
         <div class="header">
-            RECUPERAÇÃO DE SENHA
-            <a (click)="_toggleResetPassModal()" (keypress.enter)="_toggleResetPassModal()">FECHAR</a>
+            RECUPERAR SENHA
+            <a (click)="_toggleResetPasswordModal()" (keypress.enter)="_toggleResetPasswordModal()">FECHAR</a>
         </div>
         <div class="container-modal">
-            <div class="form-control">
-                <label>EMAIL:</label>
-                <input placeholder="Assunto">
-            </div>
-            <button>RECUPERAR</button>
+            <form [formGroup]="_resetPasswordForm">
+                <input placeholder="Email" formControlName="mail">
+                <button (click)="_resetPassword()" (keypress.enter)="_resetPassword()">OK</button>
+            </form>
         </div>
     </div>
 </div>

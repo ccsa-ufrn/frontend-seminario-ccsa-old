@@ -25,8 +25,8 @@ export class GeralService {
 
     constructor(private _http: Http) { }
 
-    host : string = 'http://localhost/seminario-ccsa-old/index.php';
-    // host : string = 'https://seminario.ccsa.ufrn.br';
+    // host : string = 'http://localhost/seminario-ccsa-old/index.php';
+    host : string = 'https://seminario.ccsa.ufrn.br';
 
     public getGts(): Observable<Array<ThematicGroup>> {
         return this._http.get(`${this.host}/api/tgs`)
@@ -71,5 +71,14 @@ export class GeralService {
         return this._http.post(`${this.host}/api/login`, body)
             .map((res: any) => { return res.json() });;
     }
+
+    public resetPass(email: string): Observable<any> {
+        let body = new URLSearchParams();
+        body.set('email', email);
+        return this._http.post(`${this.host}/api/forgot_pass`, body)
+            .map((res: any) => { return res.json() });;
+    }
+
+
 
 }
