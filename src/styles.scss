@@ -178,7 +178,8 @@ header {
     height: 40px;
     box-shadow: 0 2px 4px rgba(0,0,0,0.08),
         0 -1px 0px rgba(0,0,0,0.008);
-    background: white;
+    background: #669900;
+    color: white;
     z-index: 10;
     transition: transform 0.3s;
 
@@ -189,6 +190,12 @@ header {
         font-weight: 300;
         padding: 13px 0;
         margin: 0px;
+        color: white;
+        font-weight: bold;
+    }
+
+    a:hover, a:focus {
+        color: white;
     }
 
     a.login-container {
@@ -545,9 +552,6 @@ section.news {
                 letter-spacing:0px;
             }
 
-            p {
-
-            }
         }
 
         div.news.marked {

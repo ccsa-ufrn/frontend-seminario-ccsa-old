@@ -34,7 +34,7 @@ export class GeralService {
     }
 
     public getNews(): Observable<Array<News>> {
-        return this._http.get(`${this.host}/api/news`)
+        return this._http.get(`${this.host}/api/news/all`)
             .map((res: any) => { return res.json().data });
     }
 

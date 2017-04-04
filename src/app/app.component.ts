@@ -14,6 +14,14 @@ declare var jQuery: any;
 })
 export class AppComponent implements OnInit {
 
+
+    /** modals */
+    private modalMinicurso: boolean;
+    private modalOficina: boolean;
+    private modalMesaRedonda: boolean;
+    private modalConferencia: boolean;
+    private modalProgramacao: boolean;
+
     @ViewChild('mailInput')
     private _mailInput: ElementRef;
     private _isLoginModalActive: boolean;
@@ -45,6 +53,12 @@ export class AppComponent implements OnInit {
         this._markedNews = { title: '', text: '', created_at: ''};
         this._othersNews = [];
         this._allNews = [];
+
+        this.modalMinicurso = false;
+        this.modalOficina = false;
+        this.modalMesaRedonda = false;
+        this.modalConferencia = false;
+        this.modalProgramacao = false;
 
         /** REGISTER FORM */
         this._registerForm = this._formBuilder.group({
@@ -282,6 +296,26 @@ export class AppComponent implements OnInit {
         $('main').stop()
             .animate({ scrollTop: $(selector)
             .offset().top-120 }, 600, 'swing');
+    }
+
+    private _toggleMinicursoModal() {
+        this.modalMinicurso = !this.modalMinicurso;
+    }
+
+    private _toggleOficinaModal() {
+        this.modalOficina = !this.modalOficina;
+    }
+
+    private _toggleMesaRedondaModal() {
+        this.modalMesaRedonda = !this.modalMesaRedonda;
+    }
+
+    private _toggleConferenciaModal() {
+        this.modalConferencia = !this.modalConferencia;
+    }
+
+    private _toggleProgramacaoModal() {
+        this.modalProgramacao = !this.modalProgramacao;
     }
 
 }
