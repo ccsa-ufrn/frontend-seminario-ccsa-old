@@ -832,9 +832,18 @@ footer {
                 letter-spacing:0px;
             }
 
-            p {
+        }
 
-            }
+        .more-news {
+            position: absolute;
+            right: 0px;
+            top: 0;
+            background: #669900;
+            border-radius: 5px;
+            padding: 20px;
+            color: white;
+            cursor: pointer;
+            float: right;
         }
 
         div.news.marked {
