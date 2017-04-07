@@ -37,6 +37,7 @@ export class AppComponent implements OnInit {
     private _isResetPasswordOpen: boolean;
     private _isDoingLogin: boolean;
     private _resetPasswordForm: FormGroup;
+    private news: Observable<Array<News>>;
 
     constructor(
         private _domHandler: DomHandler,
@@ -89,6 +90,8 @@ export class AppComponent implements OnInit {
         this._resetPasswordForm = this._formBuilder.group({
             mail: ['', Validators.compose([Validators.required]) ]
         })
+
+        this.news = this._geralService.getNews();
     }
 
     ngOnInit() {
@@ -119,6 +122,8 @@ export class AppComponent implements OnInit {
                 this._allNews = news;
             }
         })
+
+
     }
 
     private loginFromMenu() {

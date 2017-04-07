@@ -2,105 +2,85 @@
 <div class="backdrop"></div>
 <div (click)="_handleOverlayClick()" class="overlay"></div>
 <nav class="menu-mobile">
-    <a (click)="loginFromMenu()" (keypress.enter)="loginFromMenu()">Entrar</a>
-    <a (click)="goToFromMenu('#s-inscription')" (keypress.enter)="goToFromMenu('#s-inscription')">Inscrição</a>
-    <!--<a>Programação</a>-->
-    <a (click)="goToFromMenu('#s-comment')" (keypress.enter)="goToFromMenu('#s-comment')">Contato</a>
+  <a (click)="loginFromMenu()" (keypress.enter)="loginFromMenu()">Entrar</a>
+  <a (click)="goToFromMenu('#s-inscription')" (keypress.enter)="goToFromMenu('#s-inscription')">Inscrição</a>
+  <!--<a>Programação</a>-->
+  <a (click)="goToFromMenu('#s-comment')" (keypress.enter)="goToFromMenu('#s-comment')">Contato</a>
 </nav>
 <!-- END - OVERLAY -->
 
 <header>
-    <div class="container">
-        <div class="row">
-            <div class="col-12 text-right">
-                <a
-                    class="open-menu-mobile"
-                    style="float:left; font-size: 18px; padding-top: 6px;"
-                    (click)="toggleMenu()"
-                    (keypress.enter)="toggleMenu()">
-                    <i class="fa fa-bars" aria-hidden="true"></i>
-                </a>
+  <div class="container">
+    <div class="row">
+      <div class="col-12 text-right">
+        <a class="open-menu-mobile" style="float:left; font-size: 18px; padding-top: 6px;" (click)="toggleMenu()" (keypress.enter)="toggleMenu()">
+          <i class="fa fa-bars" aria-hidden="true"></i>
+        </a>
 
-                <a style="float: right; display: block; cursor: pointer; padding-left: 10px;"  class="login-container">
-                    <a
-                        class="login"
+        <a style="float: right; display: block; cursor: pointer; padding-left: 10px;" class="login-container">
+          <a class="login" tabindex="0" (click)="_openLogin()" (keypress.enter)="_openLogin()">ENTRAR</a>
 
-                        tabindex="0"
-                        (click)="_openLogin()"
-                        (keypress.enter)="_openLogin()">ENTRAR</a>
+          <div class="login" [ngClass]="{'open': _isLoginModalActive}">
+            <div class="l">
+              <form [formGroup]="_loginForm" (ngSubmit)="_login($event)" novalidate>
+                <input #mailInput placeholder="Email" formControlName="mail">
+                <input type="password" placeholder="Senha" formControlName="password">
+                <button type="submit" style="cursor: pointer;" [disabled]="_isDoingLogin">{{ _isDoingLogin ? 'AGUARDE...' : 'LOGIN' }}</button>
+              </form>
+            </div>
+            <div class="forgot">
+              <a (click)="_toggleResetPasswordModal()" (keypress.enter)="_toggleResetPasswordModal()">Esqueci a senha</a>
+            </div>
+          </div>
+        </a>
 
-                    <div class="login" [ngClass]="{'open': _isLoginModalActive}">
-                        <div class="l">
-                            <form [formGroup]="_loginForm" (ngSubmit)="_login($event)" novalidate>
-                                <input #mailInput placeholder="Email" formControlName="mail">
-                                <input type="password" placeholder="Senha" formControlName="password">
-                                <button
-                                    type="submit"
-                                    style="cursor: pointer;"
-                                    [disabled]="_isDoingLogin">{{ _isDoingLogin ? 'AGUARDE...' : 'LOGIN' }}</button>
-                            </form>
-                        </div>
-                        <div class="forgot">
-                            <a (click)="_toggleResetPasswordModal()" (keypress.enter)="_toggleResetPasswordModal()">Esqueci a senha</a>
-                        </div>
-                    </div>
-                </a>
-
-                <a class="login" tabindex="0" (click)="_gotTo('#s-inscription')" (keypress.enter)="_gotTo('#s-inscription')"
-                    style="cursor:pointer;float: right; display: block; padding: 10px; padding-top: 14px;
+        <a class="login" tabindex="0" (click)="_gotTo('#s-inscription')" (keypress.enter)="_gotTo('#s-inscription')" style="cursor:pointer;float: right; display: block; padding: 10px; padding-top: 14px;
                     height: 40px; margin-right: 10px;">
                         INSCREVER-SE
                 </a>
 
-                <a class="login" tabindex="0" (click)="_gotTo('#s-comment')" (keypress.enter)="_gotTo('#s-comment')"
-                    style="cursor:pointer;float: right; display: block; padding: 10px; padding-top: 14px;
+        <a class="login" tabindex="0" (click)="_gotTo('#s-comment')" (keypress.enter)="_gotTo('#s-comment')" style="cursor:pointer;float: right; display: block; padding: 10px; padding-top: 14px;
                     height: 40px; margin-right: 10px;">
                         CONTATO
                 </a>
 
-                <a class="login" tabindex="0" (click)="_toggleNewsModal('#s-comment')" (keypress.enter)="_toggleNewsModal('#s-comment')"
-                    style="cursor:pointer;float: right; display: block; padding: 10px; padding-top: 14px;
+        <a class="login" tabindex="0" (click)="_toggleNewsModal('#s-comment')" (keypress.enter)="_toggleNewsModal('#s-comment')"
+          style="cursor:pointer;float: right; display: block; padding: 10px; padding-top: 14px;
                     height: 40px; margin-right: 10px;">
                         NOTÍCIAS
                 </a>
 
-                <a class="login" tabindex="0" href="http://www.seminario2016.ccsa.ufrn.br" target="_blank"
-                    style="cursor:pointer;float: right; display: block; padding: 10px; padding-top: 14px;
+        <a class="login" tabindex="0" href="http://www.seminario2016.ccsa.ufrn.br" target="_blank" style="cursor:pointer;float: right; display: block; padding: 10px; padding-top: 14px;
                     height: 40px; margin-right: 10px;">
                         ANAIS 2016
                 </a>
 
-                <a class="login" tabindex="0" (click)="_toggleProgramacaoModal()" (keypress.enter)="_toggleProgramacaoModal()"
-                    style="cursor:pointer;float: right; display: block; padding: 10px; padding-top: 14px;
+        <a class="login" tabindex="0" (click)="_toggleProgramacaoModal()" (keypress.enter)="_toggleProgramacaoModal()" style="cursor:pointer;float: right; display: block; padding: 10px; padding-top: 14px;
                     height: 40px; margin-right: 10px;">
                         PROGRAMAÇÃO
                 </a>
 
-                <a class="login" tabindex="0" (click)="_toggleConferenciaModal()" (keypress.enter)="_toggleConferenciaModal()"
-                    style="cursor:pointer;float: right; display: block; padding: 10px; padding-top: 14px;
+        <a class="login" tabindex="0" (click)="_toggleConferenciaModal()" (keypress.enter)="_toggleConferenciaModal()" style="cursor:pointer;float: right; display: block; padding: 10px; padding-top: 14px;
                     height: 40px; margin-right: 10px;">
                         CONFERÊNCIAS
                 </a>
 
-                <a class="login" tabindex="0" (click)="_toggleMesaRedondaModal()" (keypress.enter)="_toggleMesaRedondaModal()"
-                    style="cursor:pointer;float: right; display: block; padding: 10px; padding-top: 14px;
+        <a class="login" tabindex="0" (click)="_toggleMesaRedondaModal()" (keypress.enter)="_toggleMesaRedondaModal()" style="cursor:pointer;float: right; display: block; padding: 10px; padding-top: 14px;
                     height: 40px; margin-right: 10px;">
                         MESAS-REDONDAS
                 </a>
 
-                <a class="login" tabindex="0" (click)="_toggleOficinaModal()" (keypress.enter)="_toggleOficinaModal()"
-                    style="cursor:pointer;float: right; display: block; padding: 10px; padding-top: 14px;
+        <a class="login" tabindex="0" (click)="_toggleOficinaModal()" (keypress.enter)="_toggleOficinaModal()" style="cursor:pointer;float: right; display: block; padding: 10px; padding-top: 14px;
                     height: 40px; margin-right: 10px;">
                         OFICINAS
                 </a>
 
-                <a class="login" tabindex="0" (click)="_toggleMinicursoModal()" (keypress.enter)="_toggleMinicursoModal()"
-                    style="cursor:pointer;float: right; display: block; padding: 10px; padding-top: 14px;
+        <a class="login" tabindex="0" (click)="_toggleMinicursoModal()" (keypress.enter)="_toggleMinicursoModal()" style="cursor:pointer;float: right; display: block; padding: 10px; padding-top: 14px;
                     height: 40px; margin-right: 10px;">
                         MINICURSOS
                 </a>
 
-                <!--<a
+        <!--<a
                 class="login"
                 tabindex="0"
                 style="float: right; display: block; padding: 10px; padding-top: 14px; height: 40px; margin-right: 10px;"
@@ -112,669 +92,730 @@
                 style="float: right; display: block; padding: 10px; padding-top: 14px; height: 40px;"
                 href="https://ccsa.ufrn.br" target="_blank"><i class="fa fa-wordpress" aria-hidden="true"></i></a>-->
 
-            </div>
-        </div>
+      </div>
     </div>
+  </div>
 </header>
 
 <main #mainContainer>
 
-    <section class="logo">
-        <div class="container">
-            <div class="row">
-                <div class="col-12">
-                    <picture> <!-- greater size to lower size -->
-                        <source srcset="assets/ng2/marca.png" media="(min-width: 768px)">
-                        <source srcset="assets/ng2/marca_mobile.png" media="(min-width: 0px)">
-                        <img width="100%" alt="Marca - Seminário de Pesquisa do CCSA">
-                    </picture>
-                </div>
-            </div>
-        </div>
-    </section>
-
+  <section class="logo">
     <div class="container">
-        <div class="row">
-            <div class="col-12">
-                <div class="pattern1"></div>
-            </div>
+      <div class="row">
+        <div class="col-12">
+          <picture>
+            <!-- greater size to lower size -->
+            <source srcset="assets/ng2/marca.png" media="(min-width: 768px)">
+            <source srcset="assets/ng2/marca_mobile.png" media="(min-width: 0px)">
+            <img width="100%" alt="Marca - Seminário de Pesquisa do CCSA">
+          </picture>
         </div>
+      </div>
     </div>
+  </section>
+
+  <div class="container">
+    <div class="row">
+      <div class="col-12">
+        <div class="pattern1"></div>
+      </div>
+    </div>
+  </div>
 
 
+  <div class="container">
+    <div class="row">
+      <div class="col-12">
+        <nav class="main">
+          <a class="green" (click)="_toggleProgramacaoModal()" (keypress.enter)="_toggleProgramacaoModal()">Programação</a>
+          <a class="green" (click)="_gotTo('#s-downloads')" (keypress.enter)="_gotTo('#s-downloads')">Downloads</a>
+          <a class="blue" (click)="_gotTo('#s-inscription')" (keypress.enter)="_gotTo('#s-inscription')">Inscreva-se</a>
+          <a class="yellow" (click)="_openLogin()" (keypress.enter)="_openLogin()">Acessar</a>
+        </nav>
+      </div>
+    </div>
+  </div>
+
+  <div class="container ">
+    <div class="row">
+      <div class="col-12 hidden-md-down">
+        <div class="pattern1"></div>
+      </div>
+    </div>
+  </div>
+
+  <section class="presentation">
     <div class="container">
-        <div class="row">
-            <div class="col-12">
-                <nav class="main">
-                    <a class="green" (click)="_toggleProgramacaoModal()" (keypress.enter)="_toggleProgramacaoModal()" >Programação</a>
-                    <a class="green" (click)="_gotTo('#s-downloads')" (keypress.enter)="_gotTo('#s-downloads')">Downloads</a>
-                    <a class="blue" (click)="_gotTo('#s-inscription')" (keypress.enter)="_gotTo('#s-inscription')">Inscreva-se</a>
-                    <a class="yellow" (click)="_openLogin()" (keypress.enter)="_openLogin()" >Acessar</a>
-                </nav>
-            </div>
+      <div class="row">
+        <div class="col-md-6">
+          <b>O XXII Seminário de Pesquisa do CCSA/UFRN – Desigualdades Sociais e
+                    Cidadania no Brasil:o debate atual – </b> evidencia a preocupação do Centro de Ciências Sociais
+          Aplicadas em consolidar um espaço para discussão e socialização do conhecimento produzido nas diferentes áreas
+          das ciências sociais aplicadas (Direito, Economia, Administração, Serviço Social, Ciências Contábeis, Turismo e
+          Biblioteconomia)
         </div>
+        <div class="col-md-6">
+          Tem como objetivo tornar acessível à comunidade universitária a produção científica existente no CCSA por meio da divulgação
+          dos trabalhos apresentados; estimular a comunidade acadêmica do CCSA para a prática da pesquisa; contribuir para
+          o desenvolvimento da pesquisa e da reflexão teórico-metodológica no campo das Ciências Sociais Aplicadas; abrir
+          espaço para interlocução com outras áreas do conhecimento.
+        </div>
+      </div>
     </div>
+  </section>
 
-
-    <div class="container ">
-        <div class="row">
-            <div class="col-12 hidden-md-down">
-                <div class="pattern1"></div>
-            </div>
-        </div>
+  <div class="container">
+    <div class="row">
+      <div class="col-12">
+        <div class="pattern3"></div>
+      </div>
     </div>
+  </div>
 
-    <section class="presentation">
-        <div class="container">
-            <div class="row">
-                <div class="col-md-6">
-                    <b>O XXII Seminário de Pesquisa do CCSA/UFRN – Desigualdades Sociais e
-                    Cidadania no Brasil:o debate atual – </b> evidencia a preocupação do Centro
-                    de Ciências Sociais Aplicadas em consolidar um espaço para discussão e socialização
-                    do conhecimento produzido nas diferentes áreas das ciências sociais aplicadas (Direito,
-                    Economia, Administração, Serviço Social, Ciências Contábeis, Turismo e Biblioteconomia)
-                </div>
-                <div class="col-md-6">
-                    Tem como objetivo tornar acessível à comunidade universitária a produção científica existente
-                    no CCSA por meio da divulgação dos trabalhos apresentados; estimular a comunidade
-                    acadêmica do CCSA para a prática da pesquisa; contribuir para o desenvolvimento
-                    da pesquisa e da reflexão teórico-metodológica no campo das Ciências Sociais
-                    Aplicadas; abrir espaço para interlocução com outras áreas do conhecimento.
-                </div>
-            </div>
-        </div>
-    </section>
-
+  <section class="news">
     <div class="container">
-        <div class="row">
-            <div class="col-12">
-                <div class="pattern3"></div>
-            </div>
+      <div class="row">
+        <div class="col-md-12">
+          <h1>NOTÍCIAS</h1>
+          <a (click)="_toggleNewsModal()" (keyup.enter)="_toggleNewsModal()" class="more-news">TODAS AS NOTÍCIAS</a>
         </div>
-    </div>
+      </div>
 
-    <section class="news">
-        <div class="container">
-            <div class="row">
-                <div class="col-md-12">
-                    <h1>NOTÍCIAS</h1>
-                    <a (click)="_toggleNewsModal()" (keyup.enter)="_toggleNewsModal()" class="more-news">TODAS AS NOTÍCIAS</a>
-                </div>
+      <carousel></carousel>
+
+      <!--<a (click)="_toggleNewsModal()" (keypress.enter)="_toggleNewsModal()" style="cursor: pointer;">
+        <div class="row">
+          <div class="col-md-4">
+            <div class="news marked">
+              <span class="mark">DESTAQUE</span>
+              <h1>{{ _markedNews.title }}</h1>
+              <p [innerHTML]="_markedNews.text"></p>
             </div>
-            <a (click)="_toggleNewsModal()" (keypress.enter)="_toggleNewsModal()" style="cursor: pointer;">
-            <div class="row">
-                <div class="col-md-4">
-                    <div class="news marked">
-                        <span class="mark">DESTAQUE</span>
-                        <h1>{{ _markedNews.title }}</h1>
-                        <p [innerHTML]="_markedNews.text"></p>
-                    </div>
-                </div>
-                <div class="col-md-4" *ngFor="let i of _othersNews;">
-                    <div class="news">
-                        <h1>{{ i.title }}</h1>
-                        <p [innerHTML]="i.text"></p>
-                    </div>
-                </div>
+          </div>
+          <div class="col-md-4" *ngFor="let i of _othersNews;">
+            <div class="news">
+              <h1>{{ i.title }}</h1>
+              <p [innerHTML]="i.text"></p>
             </div>
+          </div>
+        </div>
+      </a>-->
+    </div>
+  </section>
+
+  <div class="container">
+    <div class="row">
+      <div class="col-12">
+        <div class="pattern2"></div>
+      </div>
+    </div>
+  </div>
+
+  <section class="downloads">
+    <div class="container">
+      <div class="row">
+        <div class="col-md-12">
+          <h1 id="s-downloads">DOWNLOADS</h1>
+          <nav>
+            <a href="assets/ng2/download/Normas.docx" target="_blank">
+              <picture>
+                <!-- greater size to lower size -->
+                <source srcset="assets/ng2/download_01.png" media="(min-width: 768px)">
+                <source srcset="assets/ng2/download_01_mobile.png" media="(min-width: 0px)">
+                <img alt="Marca - Seminário de Pesquisa do CCSA">
+              </picture>
+              Normas
             </a>
+            <a href="assets/ng2/download/template.poster.zip" target="_blank">
+              <picture>
+                <!-- greater size to lower size -->
+                <source srcset="assets/ng2/download_02.png" media="(min-width: 768px)">
+                <source srcset="assets/ng2/download_02_mobile.png" media="(min-width: 0px)">
+                <img alt="Marca - Seminário de Pesquisa do CCSA">
+              </picture>
+              Template para Pôster
+            </a>
+            <a href="assets/ng2/download/template.comunicao.oral.texto.zip" target="_blank">
+              <picture>
+                <!-- greater size to lower size -->
+                <source srcset="assets/ng2/download_02.png" media="(min-width: 768px)">
+                <source srcset="assets/ng2/download_02_mobile.png" media="(min-width: 0px)">
+                <img alt="Marca - Seminário de Pesquisa do CCSA">
+              </picture>
+              Template para Comunicação Oral
+            </a>
+            <a href="assets/ng2/download/template.caso.ensino.zip" target="_blank">
+              <picture>
+                <!-- greater size to lower size -->
+                <source srcset="assets/ng2/download_02.png" media="(min-width: 768px)">
+                <source srcset="assets/ng2/download_02_mobile.png" media="(min-width: 0px)">
+                <img alt="Marca - Seminário de Pesquisa do CCSA">
+              </picture>
+              Template para Casos para Ensino
+            </a>
+            <a>
+              <picture>
+                <!-- greater size to lower size -->
+                <source srcset="assets/ng2/download_01.png" media="(min-width: 768px)">
+                <source srcset="assets/ng2/download_01_mobile.png" media="(min-width: 0px)">
+                <img alt="Marca - Seminário de Pesquisa do CCSA">
+              </picture>
+              Programação
+            </a>
+          </nav>
         </div>
-    </section>
-
-    <div class="container">
-        <div class="row">
-            <div class="col-12">
-                <div class="pattern2"></div>
-            </div>
-        </div>
+      </div>
     </div>
+  </section>
 
-    <section class="downloads">
-        <div class="container">
-            <div class="row">
-                <div class="col-md-12">
-                    <h1 id="s-downloads">DOWNLOADS</h1>
-                    <nav>
-                        <a href="assets/ng2/download/Normas.docx" target="_blank">
-                            <picture> <!-- greater size to lower size -->
-                                <source srcset="assets/ng2/download_01.png" media="(min-width: 768px)">
-                                <source srcset="assets/ng2/download_01_mobile.png" media="(min-width: 0px)">
-                                <img alt="Marca - Seminário de Pesquisa do CCSA">
-                            </picture>
-                            Normas
-                        </a>
-                        <a href="assets/ng2/download/template.poster.zip" target="_blank">
-                            <picture> <!-- greater size to lower size -->
-                                <source srcset="assets/ng2/download_02.png" media="(min-width: 768px)">
-                                <source srcset="assets/ng2/download_02_mobile.png" media="(min-width: 0px)">
-                                <img alt="Marca - Seminário de Pesquisa do CCSA">
-                            </picture>
-                            Template para Pôster
-                        </a>
-                        <a href="assets/ng2/download/template.comunicao.oral.texto.zip" target="_blank">
-                            <picture> <!-- greater size to lower size -->
-                                <source srcset="assets/ng2/download_02.png" media="(min-width: 768px)">
-                                <source srcset="assets/ng2/download_02_mobile.png" media="(min-width: 0px)">
-                                <img alt="Marca - Seminário de Pesquisa do CCSA">
-                            </picture>
-                            Template para Comunicação Oral
-                        </a>
-                        <a href="assets/ng2/download/template.caso.ensino.zip" target="_blank">
-                            <picture> <!-- greater size to lower size -->
-                                <source srcset="assets/ng2/download_02.png" media="(min-width: 768px)">
-                                <source srcset="assets/ng2/download_02_mobile.png" media="(min-width: 0px)">
-                                <img alt="Marca - Seminário de Pesquisa do CCSA">
-                            </picture>
-                            Template para Casos para Ensino
-                        </a>
-                        <a>
-                            <picture> <!-- greater size to lower size -->
-                                <source srcset="assets/ng2/download_01.png" media="(min-width: 768px)">
-                                <source srcset="assets/ng2/download_01_mobile.png" media="(min-width: 0px)">
-                                <img alt="Marca - Seminário de Pesquisa do CCSA">
-                            </picture>
-                            Programação
-                        </a>
-                    </nav>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <div class="container">
-        <div class="row">
-            <div class="col-12">
-                <div class="pattern1"></div>
-            </div>
-        </div>
+  <div class="container">
+    <div class="row">
+      <div class="col-12">
+        <div class="pattern1"></div>
+      </div>
     </div>
+  </div>
 
-    <section class="thematic-groups">
-        <div class="container">
-            <div class="row">
-                <div class="col-md-12">
-                    <h1><span>GRUPOS</span> TEMÁTICOS</h1>
-                </div>
-            </div>
-
-            <div class="row">
-                <div class="col-md-6">
-                    <ul class="main">
-                        <li *ngFor="let i of _gtsleft;let k2 = index;">
-                            <div class="ball"></div>
-                            <span>{{ i.name }}</span>
-                            <ul>
-                                <li *ngFor="let j of i.tgs; let k = index;">
-                                    <a (click)="openSub('div'+ k +'left'+ k2)" (keypress.enter)="openSub('div'+ k +'left'+ k2)">{{ j.name }}</a>
-                                    <div id="div{{ k }}left{{ k2 }}">
-                                        <p class="coordinators">{{ j.coordinators }}</p>
-                                        <p class="description">{{ j.syllabus }}</p>
-                                    </div>
-                                </li>
-                            </ul>
-                        </li>
-                    </ul>
-                </div>
-
-                <div class="col-md-6">
-                    <ul class="main">
-                        <li *ngFor="let i of _gtsright; let k2 = index;">
-                            <div class="ball"></div>
-                            <span>{{ i.name }}</span>
-                            <ul>
-                                <li *ngFor="let j of i.tgs; let k = index;">
-                                    <a (click)="openSub('div'+ k +'right'+ k2)" (keypress.enter)="openSub('div'+ k +'left'+ k2)">{{ j.name }}</a>
-                                    <div id="div{{ k }}right{{ k2 }}">
-                                        <p class="coordinators">{{ j.coordinators }}</p>
-                                        <p class="description">{{ j.syllabus }}</p>
-                                    </div>
-                                </li>
-                            </ul>
-                        </li>
-                    </ul>
-                </div>
-            </div>
-        </div>
-    </section> <!-- end / section.thematic-group -->
-
+  <section class="thematic-groups">
     <div class="container">
-        <div class="row">
-            <div class="col-12">
-                <div class="pattern3"></div>
-            </div>
+      <div class="row">
+        <div class="col-md-12">
+          <h1><span>GRUPOS</span> TEMÁTICOS</h1>
         </div>
+      </div>
+
+      <div class="row">
+        <div class="col-md-6">
+          <ul class="main">
+            <li *ngFor="let i of _gtsleft;let k2 = index;">
+              <div class="ball"></div>
+              <span>{{ i.name }}</span>
+              <ul>
+                <li *ngFor="let j of i.tgs; let k = index;">
+                  <a (click)="openSub('div'+ k +'left'+ k2)" (keypress.enter)="openSub('div'+ k +'left'+ k2)">{{ j.name }}</a>
+                  <div id="div{{ k }}left{{ k2 }}">
+                    <p class="coordinators">{{ j.coordinators }}</p>
+                    <p class="description">{{ j.syllabus }}</p>
+                  </div>
+                </li>
+              </ul>
+            </li>
+          </ul>
+        </div>
+
+        <div class="col-md-6">
+          <ul class="main">
+            <li *ngFor="let i of _gtsright; let k2 = index;">
+              <div class="ball"></div>
+              <span>{{ i.name }}</span>
+              <ul>
+                <li *ngFor="let j of i.tgs; let k = index;">
+                  <a (click)="openSub('div'+ k +'right'+ k2)" (keypress.enter)="openSub('div'+ k +'left'+ k2)">{{ j.name }}</a>
+                  <div id="div{{ k }}right{{ k2 }}">
+                    <p class="coordinators">{{ j.coordinators }}</p>
+                    <p class="description">{{ j.syllabus }}</p>
+                  </div>
+                </li>
+              </ul>
+            </li>
+          </ul>
+        </div>
+      </div>
     </div>
+  </section>
+  <!-- end / section.thematic-group -->
 
-    <section class="register" style="margin: 0;">
-        <div class="container">
-            <div class="row">
-                <div class="col-md-12">
-                    <h1 id="s-inscription">INSCRIÇÕES <span>ATÉ 7 DE MAIO</span></h1>
+  <div class="container">
+    <div class="row">
+      <div class="col-12">
+        <div class="pattern3"></div>
+      </div>
+    </div>
+  </div>
 
-                    <form [formGroup]="_registerForm" (ngSubmit)="_register($event)" novalidate>
-                        <div class="form-control">
-                            <label>NOME:</label>
-                            <input placeholder="Nome Completo" formControlName="name">
+  <section class="register" style="margin: 0;">
+    <div class="container">
+      <div class="row">
+        <div class="col-md-12">
+          <h1 id="s-inscription">INSCRIÇÕES <span>ATÉ 7 DE MAIO</span></h1>
 
-                            <div *ngIf="_registerForm.get('name').errors && (_registerForm.get('name').dirty || _registerForm.get('name').touched)">
-                                <p [hidden]="!_registerForm.get('name').hasError('required')">É obrigatório</p>
-                            </div>
-                        </div>
+          <form [formGroup]="_registerForm" (ngSubmit)="_register($event)" novalidate>
+            <div class="form-control">
+              <label>NOME:</label>
+              <input placeholder="Nome Completo" formControlName="name">
 
-                        <div class="form-control">
-                            <label>EMAIL:</label>
-                            <input placeholder="Email" formControlName="mail">
+              <div *ngIf="_registerForm.get('name').errors && (_registerForm.get('name').dirty || _registerForm.get('name').touched)">
+                <p [hidden]="!_registerForm.get('name').hasError('required')">É obrigatório</p>
+              </div>
+            </div>
 
-                            <div *ngIf="_registerForm.get('mail').errors && (_registerForm.get('mail').dirty || _registerForm.get('mail').touched)">
-                                <p [hidden]="!_registerForm.get('mail').hasError('required')">É obrigatório</p>
-                            </div>
-                        </div>
+            <div class="form-control">
+              <label>EMAIL:</label>
+              <input placeholder="Email" formControlName="mail">
 
-                        <div class="form-control">
-                            <label>CPF:</label>
-                            <input placeholder="CPF" formControlName="cpf">
+              <div *ngIf="_registerForm.get('mail').errors && (_registerForm.get('mail').dirty || _registerForm.get('mail').touched)">
+                <p [hidden]="!_registerForm.get('mail').hasError('required')">É obrigatório</p>
+              </div>
+            </div>
 
-                            <div *ngIf="_registerForm.get('cpf').errors && (_registerForm.get('cpf').dirty || _registerForm.get('cpf').touched)">
-                                <p [hidden]="!_registerForm.get('cpf').hasError('required')">É obrigatório</p>
-                            </div>
-                        </div>
+            <div class="form-control">
+              <label>CPF:</label>
+              <input placeholder="CPF" formControlName="cpf">
 
-                        <div class="form-control">
-                            <label>CATEGORIA:</label>
-                            <select placeholder="Categoria" formControlName="category">
+              <div *ngIf="_registerForm.get('cpf').errors && (_registerForm.get('cpf').dirty || _registerForm.get('cpf').touched)">
+                <p [hidden]="!_registerForm.get('cpf').hasError('required')">É obrigatório</p>
+              </div>
+            </div>
+
+            <div class="form-control">
+              <label>CATEGORIA:</label>
+              <select placeholder="Categoria" formControlName="category">
                                 <option value="student">Discente</option>
                                 <option value="instructor">Docente/Técnico-Administrativo</option>
                                 <option value="noacademic">Sem vínculo acadêmico</option>
                             </select>
 
-                            <div *ngIf="_registerForm.get('category').errors && (_registerForm.get('category').dirty || _registerForm.get('category').touched)">
-                                <p [hidden]="!_registerForm.get('category').hasError('required')">É obrigatório</p>
-                            </div>
-                        </div>
-
-                        <div class="form-control">
-                            <label>INSTITUIÇÃO:</label>
-                            <input placeholder="Instituição" formControlName="institution">
-
-                            <div *ngIf="_registerForm.get('institution').errors && (_registerForm.get('institution').dirty || _registerForm.get('institution').touched)">
-                                <p [hidden]="!_registerForm.get('institution').hasError('required')">É obrigatório</p>
-                            </div>
-                        </div>
-
-                        <div class="form-control">
-                            <label>TELEFONE:</label>
-                            <input placeholder="Telefone" formControlName="phone">
-
-                            <div *ngIf="_registerForm.get('phone').errors && (_registerForm.get('phone').dirty || _registerForm.get('phone').touched)">
-                                <p [hidden]="!_registerForm.get('phone').hasError('required')">É obrigatório</p>
-                            </div>
-                        </div>
-
-                        <div class="form-control">
-                            <label>SENHA:</label>
-                            <input type="password" placeholder="Senha" formControlName="password">
-
-                            <div *ngIf="_registerForm.get('password').errors && (_registerForm.get('password').dirty || _registerForm.get('password').touched)">
-                                <p [hidden]="!_registerForm.get('password').hasError('required')">É obrigatório</p>
-                            </div>
-                        </div>
-
-                        <div class="form-control">
-                            <label>CONFIRMAR SENHA:</label>
-                            <input type="password"  placeholder="Confirmar Senha" formControlName="repeatPassword">
-
-                            <div *ngIf="_registerForm.get('repeatPassword').errors && (_registerForm.get('repeatPassword').dirty || _registerForm.get('repeatPassword').touched)">
-                                <p [hidden]="!_registerForm.get('repeatPassword').hasError('required')">É obrigatório</p>
-                            </div>
-                        </div>
-
-                        <button type="submit" [disabled]="isInscriptionProcessing">{{ isInscriptionProcessing ? 'CARREGANDO' : 'INSCREVER-SE' }}</button>
-                    </form>
-
-                </div>
+              <div *ngIf="_registerForm.get('category').errors && (_registerForm.get('category').dirty || _registerForm.get('category').touched)">
+                <p [hidden]="!_registerForm.get('category').hasError('required')">É obrigatório</p>
+              </div>
             </div>
-        </div>
-    </section> <!-- end / register -->
 
-    <div class="container">
-        <div class="row">
-            <div class="col-12">
-                <div class="pattern3"></div>
+            <div class="form-control">
+              <label>INSTITUIÇÃO:</label>
+              <input placeholder="Instituição" formControlName="institution">
+
+              <div *ngIf="_registerForm.get('institution').errors && (_registerForm.get('institution').dirty || _registerForm.get('institution').touched)">
+                <p [hidden]="!_registerForm.get('institution').hasError('required')">É obrigatório</p>
+              </div>
             </div>
+
+            <div class="form-control">
+              <label>TELEFONE:</label>
+              <input placeholder="Telefone" formControlName="phone">
+
+              <div *ngIf="_registerForm.get('phone').errors && (_registerForm.get('phone').dirty || _registerForm.get('phone').touched)">
+                <p [hidden]="!_registerForm.get('phone').hasError('required')">É obrigatório</p>
+              </div>
+            </div>
+
+            <div class="form-control">
+              <label>SENHA:</label>
+              <input type="password" placeholder="Senha" formControlName="password">
+
+              <div *ngIf="_registerForm.get('password').errors && (_registerForm.get('password').dirty || _registerForm.get('password').touched)">
+                <p [hidden]="!_registerForm.get('password').hasError('required')">É obrigatório</p>
+              </div>
+            </div>
+
+            <div class="form-control">
+              <label>CONFIRMAR SENHA:</label>
+              <input type="password" placeholder="Confirmar Senha" formControlName="repeatPassword">
+
+              <div *ngIf="_registerForm.get('repeatPassword').errors && (_registerForm.get('repeatPassword').dirty || _registerForm.get('repeatPassword').touched)">
+                <p [hidden]="!_registerForm.get('repeatPassword').hasError('required')">É obrigatório</p>
+              </div>
+            </div>
+
+            <button type="submit" [disabled]="isInscriptionProcessing">{{ isInscriptionProcessing ? 'CARREGANDO' : 'INSCREVER-SE' }}</button>
+          </form>
+
         </div>
+      </div>
     </div>
+  </section>
+  <!-- end / register -->
 
-    <section class="contact">
-        <div class="container">
-            <div class="row">
-                <div class="col-md-12">
-                    <h1 id="s-comment">CONTATO</h1>
+  <div class="container">
+    <div class="row">
+      <div class="col-12">
+        <div class="pattern3"></div>
+      </div>
+    </div>
+  </div>
 
-                    <form [formGroup]="_contactForm" (ngSubmit)="_sendMessage($event)" novalidate>
-                        <div class="form-control">
-                            <label>NOME:</label>
-                            <input placeholder="Nome Completo" formControlName="name">
+  <section class="contact">
+    <div class="container">
+      <div class="row">
+        <div class="col-md-12">
+          <h1 id="s-comment">CONTATO</h1>
 
-                            <div *ngIf="_contactForm.get('name').errors && (_contactForm.get('name').dirty || _contactForm.get('name').touched)">
-                                <p [hidden]="!_contactForm.get('name').hasError('required')">É obrigatório</p>
-                            </div>
-                        </div>
+          <form [formGroup]="_contactForm" (ngSubmit)="_sendMessage($event)" novalidate>
+            <div class="form-control">
+              <label>NOME:</label>
+              <input placeholder="Nome Completo" formControlName="name">
 
-                        <div class="form-control">
-                            <label>EMAIL:</label>
-                            <input placeholder="Email" formControlName="mail">
-
-                            <div *ngIf="_contactForm.get('mail').errors && (_contactForm.get('mail').dirty || _contactForm.get('mail').touched)">
-                                <p [hidden]="!_contactForm.get('mail').hasError('required')">É obrigatório</p>
-                            </div>
-                        </div>
-
-                        <div class="form-control">
-                            <label>ASSUNTO:</label>
-                            <input placeholder="Assunto" formControlName="subject">
-
-                            <div *ngIf="_contactForm.get('subject').errors && (_contactForm.get('subject').dirty || _contactForm.get('subject').touched)">
-                                <p [hidden]="!_contactForm.get('subject').hasError('required')">É obrigatório</p>
-                            </div>
-                        </div>
-
-                        <div class="form-control">
-                            <label>MENSAGEM:</label>
-                            <textarea placeholder="Mensagem" formControlName="message"></textarea>
-
-                            <div *ngIf="_contactForm.get('message').errors && (_contactForm.get('message').dirty || _contactForm.get('message').touched)">
-                                <p [hidden]="!_contactForm.get('message').hasError('required')">É obrigatório</p>
-                            </div>
-                        </div>
-
-                        <button type="submit">ENVIAR</button>
-                    </form>
-
-                </div>
+              <div *ngIf="_contactForm.get('name').errors && (_contactForm.get('name').dirty || _contactForm.get('name').touched)">
+                <p [hidden]="!_contactForm.get('name').hasError('required')">É obrigatório</p>
+              </div>
             </div>
-        </div>
-    </section> <!-- end / contact -->
 
-    <section class="support">
-        <div class="container">
-            <div class="row">
-                <div class="col-md-12">
-                    <div class="support-container">
-                        <div class="item">
-                            <h1>REALIZAÇÃO</h1>
-                            <div class="support-container">
-                                <img src="assets/ng2/ufrn.png">
-                                <img src="assets/ng2/ccsa.png">
-                            </div>
-                        </div>
-                        <div class="item">
-                            <h1>APOIO</h1>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section> <!-- end / support -->
+            <div class="form-control">
+              <label>EMAIL:</label>
+              <input placeholder="Email" formControlName="mail">
 
-    <footer>
-        <div class="container">
-            <div class="row">
-                <div class="col-12">
-                    ISSN 1808 6381 - <a href="https://ccsa-ufrn.github.io/" target="_black">ATCCSA</a>
-                </div>
+              <div *ngIf="_contactForm.get('mail').errors && (_contactForm.get('mail').dirty || _contactForm.get('mail').touched)">
+                <p [hidden]="!_contactForm.get('mail').hasError('required')">É obrigatório</p>
+              </div>
             </div>
+
+            <div class="form-control">
+              <label>ASSUNTO:</label>
+              <input placeholder="Assunto" formControlName="subject">
+
+              <div *ngIf="_contactForm.get('subject').errors && (_contactForm.get('subject').dirty || _contactForm.get('subject').touched)">
+                <p [hidden]="!_contactForm.get('subject').hasError('required')">É obrigatório</p>
+              </div>
+            </div>
+
+            <div class="form-control">
+              <label>MENSAGEM:</label>
+              <textarea placeholder="Mensagem" formControlName="message"></textarea>
+
+              <div *ngIf="_contactForm.get('message').errors && (_contactForm.get('message').dirty || _contactForm.get('message').touched)">
+                <p [hidden]="!_contactForm.get('message').hasError('required')">É obrigatório</p>
+              </div>
+            </div>
+
+            <button type="submit">ENVIAR</button>
+          </form>
+
         </div>
-    </footer>
+      </div>
+    </div>
+  </section>
+  <!-- end / contact -->
+
+  <section class="support">
+    <div class="container">
+      <div class="row">
+        <div class="col-md-12">
+          <div class="support-container">
+            <div class="item">
+              <h1>REALIZAÇÃO</h1>
+              <div class="support-container">
+                <img src="assets/ng2/ufrn.png">
+                <img src="assets/ng2/ccsa.png">
+              </div>
+            </div>
+            <div class="item">
+              <h1>APOIO</h1>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+  <!-- end / support -->
+
+  <footer>
+    <div class="container">
+      <div class="row">
+        <div class="col-12">
+          ISSN 1808 6381 - <a href="https://ccsa-ufrn.github.io/" target="_black">ATCCSA</a>
+        </div>
+      </div>
+    </div>
+  </footer>
 
 </main>
 
-<div class="modal-news" [ngClass]="{'open': _isNewsModalOpen}" >
-    <div class="container-all">
-        <div class="header">
-            NOTÍCIAS
-            <a (click)="_toggleNewsModal()" (keypress.enter)="_toggleNewsModal()">FECHAR</a>
-        </div>
-        <div class="container-modal">
-
-            <ul>
-                <li *ngFor="let n of _allNews">
-                    <h1>{{ n.title }}</h1>
-                    <p [innerHTML]="n.text"></p>
-                </li>
-            </ul>
-
-        </div>
+<div class="modal-news" [ngClass]="{'open': _isNewsModalOpen}">
+  <div class="container-all">
+    <div class="header">
+      NOTÍCIAS
+      <a (click)="_toggleNewsModal()" (keypress.enter)="_toggleNewsModal()">FECHAR</a>
     </div>
+    <div class="container-modal">
+
+      <ul>
+        <li *ngFor="let n of _allNews">
+          <h1>{{ n.title }}</h1>
+          <p [innerHTML]="n.text"></p>
+        </li>
+      </ul>
+
+    </div>
+  </div>
 </div>
 
 
 <div class="modal-reset-password" [ngClass]="{'open': _isResetPasswordOpen}">
-    <div class="container-all">
-        <div class="header">
-            RECUPERAR SENHA
-            <a (click)="_toggleResetPasswordModal()" (keypress.enter)="_toggleResetPasswordModal()">FECHAR</a>
-        </div>
-        <div class="container-modal">
-            <form [formGroup]="_resetPasswordForm">
-                <input placeholder="Email" formControlName="mail">
-                <button (click)="_resetPassword()" (keypress.enter)="_resetPassword()">OK</button>
-            </form>
-        </div>
+  <div class="container-all">
+    <div class="header">
+      RECUPERAR SENHA
+      <a (click)="_toggleResetPasswordModal()" (keypress.enter)="_toggleResetPasswordModal()">FECHAR</a>
     </div>
+    <div class="container-modal">
+      <form [formGroup]="_resetPasswordForm">
+        <input placeholder="Email" formControlName="mail">
+        <button (click)="_resetPassword()" (keypress.enter)="_resetPassword()">OK</button>
+      </form>
+    </div>
+  </div>
 </div>
 
 <!-- MODALS NOVOS -->
 
-<div class="modal-news" [ngClass]="{'open': modalMinicurso}" >
-    <div class="container-all">
-        <div class="header">
-            MINICURSOS
-            <a (click)="_toggleMinicursoModal()" (keypress.enter)="_toggleMinicursoModal()">FECHAR</a>
-        </div>
-        <div class="container-modal">
-
-            <ul>
-                <li> 1. A ATUAÇÃO ESTATAL NA INTERNAÇÃO CONTRA A VONTADE DE CONSUMIDORES DE SUBSTÂNCIAS PSICOATIVAS</li>
-                <li> 2. A IMPORTÂNCIA E A AVALIAÇÃO DOS CONTROLES INTERNOS DE UMA EMPRESA – ROTINAS INTERNAS, ACESSOS, SEGREGAÇÃO DE FUNÇÕES, AMARRAÇÕES, LIMITAÇÕES DE CONTROLE, DESFALQUES TEMPORÁRIOS E PERMANENTES</li>
-                <li> 3. A RESPONSABILIDADE CIVIL EXTRACONTRATUAL DO ESTADO PELA PRESTAÇÃO DE SERVIÇOS DE SAÚDE PÚBLICA</li>
-                <li> 4. ANÁLISE DE DADOS CONTÁBEIS COM A UTILIZAÇÃO DAS FERRAMENTAS ESTATÍSTICA DO MICROSOFT EXCEL – TEORIA E PRÁTICA</li>
-                <li> 5. COMO ELABORAR PEÇAS PROCESSUAIS CONSTITUCIONAIS -Turma 01: ADI, ADC, ADO e ADPF</li>
-                <li> 6. COMO SUBMETER COM SUCESSO UM ARTIGO PARA UM PERIÓDICO CIENTÍFICO EM TURISMO: EXPERIÊNCIAS E TÉCNICAS</li>
-                <li> 7. COMUNICAÇÃO EMPÁTICA</li>
-                <li> 8. CONVIVÊNCIA COM O SEMIÁRIDO BRASILEIRO</li>
-                <li> 9. DEFININDO ESTRATÉGIAS PARA ALAVANCAR O SUCESSO EMPRESARIAL COM OS REQUISITOS DA NORMA ISO 9001:2015 – SISTEMA DE GESTÃO DA QUALIDADE</li>
-                <li> 10. ELABORANDO ARTIGOS CIENTÍFICOS: Foco nos Discentes de Ciências Contábeis” </li>
-                <li> 11. ESTATUTO DA CIDADE E PLANO DIRETOR: ESTUDANDO ASPECTOS ESSENCIAIS DA POLÍTICA URBANA NO BRASIL </li>
-                <li> 12. EXCEL AVANÇADO APLICADO NAS EMPRESAS </li>
-                <li> 13. IMPORTÂNCIA DOS TRIBUTOS NO DESEMPENHO DA EMPRESA BRASILEIRA </li>
-                <li> 14. IN VERBIS- NORMAS DA ABNT E PESQUISA CIENTÍFICA: PARA ENTENDER, PRODUZIR E PUBLICAR</li>
-                <li> 15. INTRODUÇÃO À GESTÃO DE PROCESSOS </li>
-                <li> 16. INTRODUÇÃO À TEORIA DA ESPECULAÇÃO </li>
-                <li> 17. INTRODUÇÃO AO R </li>
-                <li> 18. INVESTINDO EM AÇÕES E EM RENDA FIXA </li>
-                <li> 19. MAPEAMENTO DE PROCESSOS COM O BIZAGI UTILIZANDO BPMN </li>
-                <li> 20. MATEMÁTICA FINANCEIRA COM UTILIZAÇÃO DA HP12C </li>
-                <li> 21. MICROGERAÇÃO DE ENERGIA ELÉTRICA E SUA REGULAÇÃO</li>
-                <li> 22. MONITORAMENTO E CONTROLE DE PROJETOS</li>
-                <li> 23. MULHER, MERCADO DE TRABALHO E A AGENDA DO TRABALHO DECENTE DA OIT</li>
-                <li> 24. NORMALIZAÇÃO DE TRABALHOS ACADÊMICOS</li>
-                <li> 25. NORMATIZAÇÃO ABNT REFERÊNCIAS CITAÇÕES EM TRABALHOS CIENTIFICOS</li>
-                <li> 26. NOTAS EXPLICATIVAS: QUE BICHO É ESSE?</li>
-                <li> 27. OS DESAFIOS NA SOCIEDADE CONTEMPORÂNEA NO COMBATE AO TRABALHO INFANTIL RURAL E SEXUAL</li>
-                <li> 28. PLÁGIO NA ACADEMIA: TIPOS, CARACTERÍSTICA E COMO EVITAR</li>
-                <li> 29. POR UMA NOVA HERMENÊUTICA DOS DIREITOS FUNDAMENTAIS: DEVERES DO ESTADO PARA COM AS POLÍTICAS PÚBLICAS</li>
-                <li> 30. PROCESSO CONSTITUCIONAL BRASILEIRO</li>
-                <li> 31. PROPORCIONALIDADE VS MORALIDADE</li>
-                <li> 32. SETOR PESSOAL</li>
-                <li> 33. SOCIEDADE DE DEBATES: ENSAIOS DE LÓGICA ARGUMENTATIVA E DESENVOLVIMENTO DE ORATÓRIA</li>
-                <li> 34. USO DE BASES DE DADOS E FERRAMENTAS DE OTIMIZAÇÃO DE PESQUISA</li>
-                <li> 35. A PRÁTICA DO ASSISTENTE SOCIAL NA EDUCAÇÃO</li>
-                <li> 36. ANÁLISE DA VIABILIDADE ECONÔMICA DE UM EVENTO</li>
-                <li> 37. ARTE E MARXISMO</li>
-                <li> 38. CONSERVAÇÃO E RESTAURAÇÃO DE LIVROS</li>
-                <li> 39. DA SINDICÂNCIA E DO PROCESSO ADMINISTRATIVO DISCIPLINAR</li>
-                <li> 40. DIREITO E DESENVOLVIMENTO: O PROTAGONISMO CIDADÃO NA CONSTRUÇÃO DE UM DESENVOLVIMENTO SUSTENTÁVEL</li>
-                <li> 41. DIREITOS DOS ANIMAIS: UM OLHAR DO DIREITO PARA ALÉM DO HUMANO.</li>
-                <li> 42. DIVERSIDADE HUMANA, SEXUALIDADES E FEMINISMO: A PRESENÇA DA MULHER NA LITERATURA E DESAFIOS CONTEMPORÂNEOS</li>
-                <li> 43. FOTOGRAFIA E TURISMO: O QUE SE PODE VER ALÉM DO OLHAR</li>
-                <li> 44. INDEXAÇÃO DE IMAGENS</li>
-                <li> 45. INFORMAÇÃO DIGITAL ACESSÍVEL</li>
-                <li> 46. INTERACIONISMO SIMBÓLICO E ETNOMETODOLOGIA: PROPOSIÇÕES METODOLÓGICAS PARA PESQUISAS NA ADMINISTRAÇÃO PÚBLICA</li>
-                <li> 47. INTRODUÇÃO À REDAÇÃO DE PARECER JURÍDICO - CASO ANARQUISTA</li>
-                <li> 48. INTRODUÇÃO AO DIREITO DA PROPRIEDADE INTELECTUAL</li>
-                <li> 49. MÉTODOS QUANTITATIVOS: CORRELAÇÃO E REGRESSÃO SIMPLES</li>
-                <li> 50. O DIREITO À CIDADE E A VIOLÊNCIA DE GENERO</li>
-                <li> 51. O ENFRENTAMENTO DA QUESTÃO SOCIAL E EMANCIPAÇÃO HUMANA NA PERSPECTIVA JURIDICA: OS LIMITES DO DIREITO E SEU CARÁTER DE CLASSE</li>
-                <li> 52. PATRIMÔNIO CULTURAL E TURISMO NO BRASIL: CIDADE HISTÓRICAS COMO CIDADES TURÍSTICAS.</li>
-                <li> 53. PATRIMÔNIO HISTÓRICO E CULTURAL DE NATAL NA ÓTICA DO TURISMO</li>
-                <li> 54. SEUS DADOS PESSOAIS E A INTERNET: SITUAÇÃO DO DIREITO FUNDAMENTAL À PRIVACIDADE NA ERA DAS REDES SOCIAIS</li>
-                <li> 55. SUSTENTABILIDADE SOCIOAMBIENTAL NA ADMINISTRAÇÃO PÚBLICA</li>
-                <li> 56. TRUQUES DO WORD NA NORMATIZAÇÃO DE TRABALHOS ACADÊMICOS</li>
-                <li> 57. AS LIÇÕES DE DIREITO DA TRILOGIA TEBANA DE SÓFOCLES: DE LAIO A ANTÍGONA</li>
-                <li> 58. ASPECTOS GERAIS E AS MUDANÇAS APRESENTADAS PELO NOVO MARCO REGULATÓRIO DO TERCEIRO SETOR</li>
-                <li> 59. AUDITORIA CONTÁBIL DE “ASSURANCE” NA PRÁTICA</li>
-                <li> 60. CONSULTORIA ORGANIZACIONAL</li>
-                <li> 61. DESMISTIFICANDO O MESTRADO: A PREPARAÇÃO, O INGRESSO, O CURSO E SUAS POSSIBILIDADES</li>
-                <li> 62. DESMISTIFICANDO TRABALHOS CIENTÍFICOS</li>
-                <li> 63. DIREITO AMBIENTAL</li>
-                <li> 64. DIREITO, POLÍTICA TRIBUTÁRIA E DESIGUALDADES SOCIAIS: UM ESTUDO INTRODUTÓRIO</li>
-                <li> 65. EXCEL AVANÇADO APLICADO NAS EMPRESAS</li>
-                <li> 66. FINANÇAS PESSOAIS: MUDE SEUS HÁBITOS E TENHA SAÚDE FINANCEIRA CAPAZ DE TRANSFORMAR SUA VIDA ECONÔMICA EM UMA VIDA DE SUCESSO</li>
-                <li> 67. GERENCIAMENTO DE TEMPO: FACILITANDO A VIDA DOS ALUNOS DA GRADUAÇÃO</li>
-                <li> 68. INTRODUÇÃO À AVALIAÇÃO DE EMPRESAS (VALUATION) </li>
-                <li> 69. LEVANTAMENTO E INTERPRETAÇÃO DE DADOS SOCIOECONÔMICOS DO IPEADATA</li>
-                <li> 70. MARKETING JURÍDICO</li>
-                <li> 71. O PODER DO PENSAMENTO INOVADOR – Como definir metas, alcança-las e inspirar pessoas </li>
-                <li> 72. SISTEMAS E SOFTWARES LIVRES PARA TODOS: UMA ABORDAGEM FILOSÓFICA E SOCIOECONÔMICA BASEADA NA PROPRIEDADE COLETIVA DOS MEIOS DE PRODUÇÃO DIGITAIS </li>
-            </ul>
-
-        </div>
+<div class="modal-news" [ngClass]="{'open': modalMinicurso}">
+  <div class="container-all">
+    <div class="header">
+      MINICURSOS
+      <a (click)="_toggleMinicursoModal()" (keypress.enter)="_toggleMinicursoModal()">FECHAR</a>
     </div>
+    <div class="container-modal">
+
+      <ul>
+        <li> 1. A ATUAÇÃO ESTATAL NA INTERNAÇÃO CONTRA A VONTADE DE CONSUMIDORES DE SUBSTÂNCIAS PSICOATIVAS</li>
+        <li> 2. A IMPORTÂNCIA E A AVALIAÇÃO DOS CONTROLES INTERNOS DE UMA EMPRESA – ROTINAS INTERNAS, ACESSOS, SEGREGAÇÃO DE FUNÇÕES,
+          AMARRAÇÕES, LIMITAÇÕES DE CONTROLE, DESFALQUES TEMPORÁRIOS E PERMANENTES</li>
+        <li> 3. A RESPONSABILIDADE CIVIL EXTRACONTRATUAL DO ESTADO PELA PRESTAÇÃO DE SERVIÇOS DE SAÚDE PÚBLICA</li>
+        <li> 4. ANÁLISE DE DADOS CONTÁBEIS COM A UTILIZAÇÃO DAS FERRAMENTAS ESTATÍSTICA DO MICROSOFT EXCEL – TEORIA E PRÁTICA</li>
+        <li> 5. COMO ELABORAR PEÇAS PROCESSUAIS CONSTITUCIONAIS -Turma 01: ADI, ADC, ADO e ADPF</li>
+        <li> 6. COMO SUBMETER COM SUCESSO UM ARTIGO PARA UM PERIÓDICO CIENTÍFICO EM TURISMO: EXPERIÊNCIAS E TÉCNICAS</li>
+        <li> 7. COMUNICAÇÃO EMPÁTICA</li>
+        <li> 8. CONVIVÊNCIA COM O SEMIÁRIDO BRASILEIRO</li>
+        <li> 9. DEFININDO ESTRATÉGIAS PARA ALAVANCAR O SUCESSO EMPRESARIAL COM OS REQUISITOS DA NORMA ISO 9001:2015 – SISTEMA
+          DE GESTÃO DA QUALIDADE</li>
+        <li> 10. ELABORANDO ARTIGOS CIENTÍFICOS: Foco nos Discentes de Ciências Contábeis” </li>
+        <li> 11. ESTATUTO DA CIDADE E PLANO DIRETOR: ESTUDANDO ASPECTOS ESSENCIAIS DA POLÍTICA URBANA NO BRASIL </li>
+        <li> 12. EXCEL AVANÇADO APLICADO NAS EMPRESAS </li>
+        <li> 13. IMPORTÂNCIA DOS TRIBUTOS NO DESEMPENHO DA EMPRESA BRASILEIRA </li>
+        <li> 14. IN VERBIS- NORMAS DA ABNT E PESQUISA CIENTÍFICA: PARA ENTENDER, PRODUZIR E PUBLICAR</li>
+        <li> 15. INTRODUÇÃO À GESTÃO DE PROCESSOS </li>
+        <li> 16. INTRODUÇÃO À TEORIA DA ESPECULAÇÃO </li>
+        <li> 17. INTRODUÇÃO AO R </li>
+        <li> 18. INVESTINDO EM AÇÕES E EM RENDA FIXA </li>
+        <li> 19. MAPEAMENTO DE PROCESSOS COM O BIZAGI UTILIZANDO BPMN </li>
+        <li> 20. MATEMÁTICA FINANCEIRA COM UTILIZAÇÃO DA HP12C </li>
+        <li> 21. MICROGERAÇÃO DE ENERGIA ELÉTRICA E SUA REGULAÇÃO</li>
+        <li> 22. MONITORAMENTO E CONTROLE DE PROJETOS</li>
+        <li> 23. MULHER, MERCADO DE TRABALHO E A AGENDA DO TRABALHO DECENTE DA OIT</li>
+        <li> 24. NORMALIZAÇÃO DE TRABALHOS ACADÊMICOS</li>
+        <li> 25. NORMATIZAÇÃO ABNT REFERÊNCIAS CITAÇÕES EM TRABALHOS CIENTIFICOS</li>
+        <li> 26. NOTAS EXPLICATIVAS: QUE BICHO É ESSE?</li>
+        <li> 27. OS DESAFIOS NA SOCIEDADE CONTEMPORÂNEA NO COMBATE AO TRABALHO INFANTIL RURAL E SEXUAL</li>
+        <li> 28. PLÁGIO NA ACADEMIA: TIPOS, CARACTERÍSTICA E COMO EVITAR</li>
+        <li> 29. POR UMA NOVA HERMENÊUTICA DOS DIREITOS FUNDAMENTAIS: DEVERES DO ESTADO PARA COM AS POLÍTICAS PÚBLICAS</li>
+        <li> 30. PROCESSO CONSTITUCIONAL BRASILEIRO</li>
+        <li> 31. PROPORCIONALIDADE VS MORALIDADE</li>
+        <li> 32. SETOR PESSOAL</li>
+        <li> 33. SOCIEDADE DE DEBATES: ENSAIOS DE LÓGICA ARGUMENTATIVA E DESENVOLVIMENTO DE ORATÓRIA</li>
+        <li> 34. USO DE BASES DE DADOS E FERRAMENTAS DE OTIMIZAÇÃO DE PESQUISA</li>
+        <li> 35. A PRÁTICA DO ASSISTENTE SOCIAL NA EDUCAÇÃO</li>
+        <li> 36. ANÁLISE DA VIABILIDADE ECONÔMICA DE UM EVENTO</li>
+        <li> 37. ARTE E MARXISMO</li>
+        <li> 38. CONSERVAÇÃO E RESTAURAÇÃO DE LIVROS</li>
+        <li> 39. DA SINDICÂNCIA E DO PROCESSO ADMINISTRATIVO DISCIPLINAR</li>
+        <li> 40. DIREITO E DESENVOLVIMENTO: O PROTAGONISMO CIDADÃO NA CONSTRUÇÃO DE UM DESENVOLVIMENTO SUSTENTÁVEL</li>
+        <li> 41. DIREITOS DOS ANIMAIS: UM OLHAR DO DIREITO PARA ALÉM DO HUMANO.</li>
+        <li> 42. DIVERSIDADE HUMANA, SEXUALIDADES E FEMINISMO: A PRESENÇA DA MULHER NA LITERATURA E DESAFIOS CONTEMPORÂNEOS</li>
+        <li> 43. FOTOGRAFIA E TURISMO: O QUE SE PODE VER ALÉM DO OLHAR</li>
+        <li> 44. INDEXAÇÃO DE IMAGENS</li>
+        <li> 45. INFORMAÇÃO DIGITAL ACESSÍVEL</li>
+        <li> 46. INTERACIONISMO SIMBÓLICO E ETNOMETODOLOGIA: PROPOSIÇÕES METODOLÓGICAS PARA PESQUISAS NA ADMINISTRAÇÃO PÚBLICA</li>
+        <li> 47. INTRODUÇÃO À REDAÇÃO DE PARECER JURÍDICO - CASO ANARQUISTA</li>
+        <li> 48. INTRODUÇÃO AO DIREITO DA PROPRIEDADE INTELECTUAL</li>
+        <li> 49. MÉTODOS QUANTITATIVOS: CORRELAÇÃO E REGRESSÃO SIMPLES</li>
+        <li> 50. O DIREITO À CIDADE E A VIOLÊNCIA DE GENERO</li>
+        <li> 51. O ENFRENTAMENTO DA QUESTÃO SOCIAL E EMANCIPAÇÃO HUMANA NA PERSPECTIVA JURIDICA: OS LIMITES DO DIREITO E SEU CARÁTER
+          DE CLASSE</li>
+        <li> 52. PATRIMÔNIO CULTURAL E TURISMO NO BRASIL: CIDADE HISTÓRICAS COMO CIDADES TURÍSTICAS.</li>
+        <li> 53. PATRIMÔNIO HISTÓRICO E CULTURAL DE NATAL NA ÓTICA DO TURISMO</li>
+        <li> 54. SEUS DADOS PESSOAIS E A INTERNET: SITUAÇÃO DO DIREITO FUNDAMENTAL À PRIVACIDADE NA ERA DAS REDES SOCIAIS</li>
+        <li> 55. SUSTENTABILIDADE SOCIOAMBIENTAL NA ADMINISTRAÇÃO PÚBLICA</li>
+        <li> 56. TRUQUES DO WORD NA NORMATIZAÇÃO DE TRABALHOS ACADÊMICOS</li>
+        <li> 57. AS LIÇÕES DE DIREITO DA TRILOGIA TEBANA DE SÓFOCLES: DE LAIO A ANTÍGONA</li>
+        <li> 58. ASPECTOS GERAIS E AS MUDANÇAS APRESENTADAS PELO NOVO MARCO REGULATÓRIO DO TERCEIRO SETOR</li>
+        <li> 59. AUDITORIA CONTÁBIL DE “ASSURANCE” NA PRÁTICA</li>
+        <li> 60. CONSULTORIA ORGANIZACIONAL</li>
+        <li> 61. DESMISTIFICANDO O MESTRADO: A PREPARAÇÃO, O INGRESSO, O CURSO E SUAS POSSIBILIDADES</li>
+        <li> 62. DESMISTIFICANDO TRABALHOS CIENTÍFICOS</li>
+        <li> 63. DIREITO AMBIENTAL</li>
+        <li> 64. DIREITO, POLÍTICA TRIBUTÁRIA E DESIGUALDADES SOCIAIS: UM ESTUDO INTRODUTÓRIO</li>
+        <li> 65. EXCEL AVANÇADO APLICADO NAS EMPRESAS</li>
+        <li> 66. FINANÇAS PESSOAIS: MUDE SEUS HÁBITOS E TENHA SAÚDE FINANCEIRA CAPAZ DE TRANSFORMAR SUA VIDA ECONÔMICA EM UMA
+          VIDA DE SUCESSO</li>
+        <li> 67. GERENCIAMENTO DE TEMPO: FACILITANDO A VIDA DOS ALUNOS DA GRADUAÇÃO</li>
+        <li> 68. INTRODUÇÃO À AVALIAÇÃO DE EMPRESAS (VALUATION) </li>
+        <li> 69. LEVANTAMENTO E INTERPRETAÇÃO DE DADOS SOCIOECONÔMICOS DO IPEADATA</li>
+        <li> 70. MARKETING JURÍDICO</li>
+        <li> 71. O PODER DO PENSAMENTO INOVADOR – Como definir metas, alcança-las e inspirar pessoas </li>
+        <li> 72. SISTEMAS E SOFTWARES LIVRES PARA TODOS: UMA ABORDAGEM FILOSÓFICA E SOCIOECONÔMICA BASEADA NA PROPRIEDADE COLETIVA
+          DOS MEIOS DE PRODUÇÃO DIGITAIS </li>
+      </ul>
+
+    </div>
+  </div>
 </div>
 
-<div class="modal-news" [ngClass]="{'open': modalOficina}" >
-    <div class="container-all">
-        <div class="header">
-            OFICINAS
-            <a (click)="_toggleOficinaModal()" (keypress.enter)="_toggleOficinaModal()">FECHAR</a>
-        </div>
-        <div class="container-modal">
-
-            <ul>
-                <li>EXPLORANDO A BASE DE DADOS ECONOMÁTICA® José Mauro Madeiros Velôso Soares e Diogo Henrique Silva Lima Matutino</li>
-                <li>MENDELEY, PESQUISA CIENTIFICA E GERENCIAMENTO DE BIBLIOGRAFIAS Victor Hugo da Silva Matutino</li>
-                <li>OFICINA DE ARTIGOS CIENTÍFICOS – ESTRUTURA BÁSICA Jair Soares de Oliveira Segundo Matutino</li>
-                <li>METODOLOGIA DO TRABALHO CIENTÍFICO NO TURISMO Mayara Ferreira de Farias Vespertino</li>
-                <li>MÉTODOS E TÉCNICAS DE ELABORAÇÃO DE PROJETOS DE PESQUISA Mauro Lemuel Alexandre Vespertino</li>
-                <li>MÉTODOS QUANTITATIVOS APLICADOS AO TURISMO Victor Hugo da Silva Vespertino</li>
-                <li>MOSTRA DE CINEMA: GASTRONOMIA SUSTENTÁVEL (COCA-COLA – VOCÊ SABE O QUE ESTÁ TOMANDO?) Sueli Aparecida Moreira Vespertino</li>
-                <li>MOSTRA DE CINEMA: GASTRONOMIA SUSTENTÁVEL (COWSPIRACY: O SEGREDO DA SUSTENTABILIDADE) Sueli Aparecida Moreira Vespertino</li>
-                <li>MOSTRA DE CINEMA: GASTRONOMIA SUSTENTÁVEL (O LADO NEGRO DO CHOCOLATE) Sueli Aparecida Moreira Vespertino</li>
-                <li>MOSTRA DE CINEMA: GASTRONOMIA SUSTENTÁVEL (PÃO NOSSO DE CADA DIA) Sueli Aparecida Moreira Vespertino</li>
-                <li>MOSTRA DE CINEMA: GASTRONOMIA SUSTENTÁVEL (PIPOCA GOURMET)  Sueli Aparecida Moreira Vespertino</li>
-                <li>OFICINA DE CASOS JURÍDICOS - CASO “ANARQUISTA” Fabrízia Pessoa Serafim e Jair Soares Vespertino</li>
-                <li>A TEORIA CONSTITUCIONAL DO PROCESSO PENAL E A SEGURANÇA PÚBLICA: ASPECTOS POLÊMICOS NO RN Renata Araújo Soares Noturno</li>
-                <li>CADASTRO E SUBMISSÃO DE ARTIGOS EM REVISTAS DE TURISMO Mayara Ferreira de Farias Noturno</li>
-                <li>CADASTRO E UTILIZAÇÃO DAS FERRAMENTAS DA PLATAFORMA LATTES Mayara Ferreira de Farias Noturno</li>
-                <li>ELABORAÇÃO DE ARTIGOS CIENTÍFICOS EM TURISMO Mayara Ferreira de Farias Noturno</li>
-                <li>OFICINE III - POR TRÁS DA TELA: O PAPEL DO CINEMA NA TRANSFORMAÇÃO SOCIAL DE ATORES EM CONTEXTO DE VIOLÊNCIA E CRIMINALIDADE Fábio Ataíde e Marcus Aurélio Freitas Barros Noturno</li>
-                <li>DINAMICAS E JOGOS PARA ORGANIZAÇÕES DE TRABALHO. Antonio Alves Filho  Noturno</li>
-            </ul>
-
-        </div>
+<div class="modal-news" [ngClass]="{'open': modalOficina}">
+  <div class="container-all">
+    <div class="header">
+      OFICINAS
+      <a (click)="_toggleOficinaModal()" (keypress.enter)="_toggleOficinaModal()">FECHAR</a>
     </div>
+    <div class="container-modal">
+
+      <ul>
+        <li>EXPLORANDO A BASE DE DADOS ECONOMÁTICA® José Mauro Madeiros Velôso Soares e Diogo Henrique Silva Lima Matutino</li>
+        <li>MENDELEY, PESQUISA CIENTIFICA E GERENCIAMENTO DE BIBLIOGRAFIAS Victor Hugo da Silva Matutino</li>
+        <li>OFICINA DE ARTIGOS CIENTÍFICOS – ESTRUTURA BÁSICA Jair Soares de Oliveira Segundo Matutino</li>
+        <li>METODOLOGIA DO TRABALHO CIENTÍFICO NO TURISMO Mayara Ferreira de Farias Vespertino</li>
+        <li>MÉTODOS E TÉCNICAS DE ELABORAÇÃO DE PROJETOS DE PESQUISA Mauro Lemuel Alexandre Vespertino</li>
+        <li>MÉTODOS QUANTITATIVOS APLICADOS AO TURISMO Victor Hugo da Silva Vespertino</li>
+        <li>MOSTRA DE CINEMA: GASTRONOMIA SUSTENTÁVEL (COCA-COLA – VOCÊ SABE O QUE ESTÁ TOMANDO?) Sueli Aparecida Moreira Vespertino</li>
+        <li>MOSTRA DE CINEMA: GASTRONOMIA SUSTENTÁVEL (COWSPIRACY: O SEGREDO DA SUSTENTABILIDADE) Sueli Aparecida Moreira Vespertino</li>
+        <li>MOSTRA DE CINEMA: GASTRONOMIA SUSTENTÁVEL (O LADO NEGRO DO CHOCOLATE) Sueli Aparecida Moreira Vespertino</li>
+        <li>MOSTRA DE CINEMA: GASTRONOMIA SUSTENTÁVEL (PÃO NOSSO DE CADA DIA) Sueli Aparecida Moreira Vespertino</li>
+        <li>MOSTRA DE CINEMA: GASTRONOMIA SUSTENTÁVEL (PIPOCA GOURMET)  Sueli Aparecida Moreira Vespertino</li>
+        <li>OFICINA DE CASOS JURÍDICOS - CASO “ANARQUISTA” Fabrízia Pessoa Serafim e Jair Soares Vespertino</li>
+        <li>A TEORIA CONSTITUCIONAL DO PROCESSO PENAL E A SEGURANÇA PÚBLICA: ASPECTOS POLÊMICOS NO RN Renata Araújo Soares Noturno</li>
+        <li>CADASTRO E SUBMISSÃO DE ARTIGOS EM REVISTAS DE TURISMO Mayara Ferreira de Farias Noturno</li>
+        <li>CADASTRO E UTILIZAÇÃO DAS FERRAMENTAS DA PLATAFORMA LATTES Mayara Ferreira de Farias Noturno</li>
+        <li>ELABORAÇÃO DE ARTIGOS CIENTÍFICOS EM TURISMO Mayara Ferreira de Farias Noturno</li>
+        <li>OFICINE III - POR TRÁS DA TELA: O PAPEL DO CINEMA NA TRANSFORMAÇÃO SOCIAL DE ATORES EM CONTEXTO DE VIOLÊNCIA E CRIMINALIDADE
+          Fábio Ataíde e Marcus Aurélio Freitas Barros Noturno</li>
+        <li>DINAMICAS E JOGOS PARA ORGANIZAÇÕES DE TRABALHO. Antonio Alves Filho Noturno</li>
+      </ul>
+
+    </div>
+  </div>
 </div>
 
-<div class="modal-news" [ngClass]="{'open': modalMesaRedonda}" >
-    <div class="container-all">
-        <div class="header">
-            MESAS REDONDAS
-            <a (click)="_toggleMesaRedondaModal()" (keypress.enter)="_toggleMesaRedondaModal()">FECHAR</a>
-        </div>
-        <div class="container-modal">
-
-            <ul>
-                <li>1. A INSERÇÃO DO RIO GRANDE DO NORTE NOS SISTEMA AGROALIMENTARES GLOBALIZADOS: UMA ANÁLISE DO CASO DA FRUTICULTURA A PARTIR DO CONCEITO DE VALOR AGREGADO Emanoel Márcio Nunes  Walter Belik, Representante da Cooperativa de Produtores do Melão e Representante do Sebrae Matutino</li>
-                <li>2. A MILITARIZAÇÃO ESCOLAR: UMA BOA SAÍDA PARA INEFICIÊNCIA ESTATAL NA PROMOÇÃO DO DIREITO À EDUCAÇÃO? Ângelo José Menezes Silvino Gabriel Miranda Brito, José Willington Germano e Ana Beatriz Ferreira Rebello Presgrave Matutino</li>
-                <li>3. AGROTÓXICOS X AGROECOLOGIA: UM NECESSÁRIO DEBATE ENTRE ACADEMIA, INSTITUIÇÕES PÚBLICAS E SOCIEDADE Marise Costa de Souza Duarte  Joyce Naiana Paiva de Lima, João Hélio Cavalcanti e Tibério Clemente Rodrigues de Souza Matutino</li>
-                <li>4. ANÁLISE COMPARATIVA DA QUESTÃO HÍDRICA DO NORDESTE BRASILEIRO E DA ÁSIA CENTRAL: FALTA D’ÁGUA OU MÁ ADMINISTRAÇÃO DE RECURSOS? Ângelo José Menezes Silvino Luiza Fernandes de Abrantes Barbosa, Breno Fabrício da Silva Santos e Daniel César Neves e Silva Matutino</li>
-                <li>5. ASPECTOS GERAIS DO CPC/15 - DISCUSSÕES CRÍTICAS Fabiana Dantas Soares Alves da Mota Ana Beatriz Ferreira Rebello Presgrave e  Rafaela Oliveira Reis Cadó Matutino</li>
-                <li>6. CAMINHOS PARA PÓS-GRADUAÇÃO  Kesia Cristine Melo Alunos da pós-graduação do CCSA  Matutino</li>
-                <li>7. CIBERCONDRIA: UM PERIGO EMINENTE Thelma Pìgnataro Alunos do curso de Administração: Marketing Matutino</li>
-                <li>8. DIVERSIDADE E PROBLEMAS DE GÊNERO NA INTERNET Mariana de Siqueira Gustavo Paiva, Monalisa de Souza e Martha da Costa Matutino</li>
-                <li>9. DIVERSIDADE HUMANA E MARXISMO: DIVERSIDADE SEXUAL E A QUESTÃO DAS DROGAS EM DISCUSSÃO Mariana de Siqueira Gustavo Paiva, Monalisa de Souza e Martha da Costa Matutino</li>
-                <li>10. LÊNIN, ZAPATA E O CONSTITUCIONALISMO BRASILEIRO: UMA ANÁLISE DO CENTENÁRIO DAS REVOLUÇÕES SOCIAIS Mariana de Siqueira Gustavo Barbosa, Gabriel Vitullo e Zéu Palmeira Matutino</li>
-                <li>11. NA PRÁTICA, A TEORIA É OUTRA? INSTRUMENTALIDADE NA PERSPECTIVA DO PROJETO ÉTICO-POLÍTICO DO SERVIÇO SOCIAL BRASILEIRO Tibério Lima Henrique Wellen, Silvana Mara de Morais dos Santos e Daniela Neves Matutino</li>
-                <li>12. O ENFRENTAMENTO À VIOLÊNCIA SEXUAL CONTRA CRIANÇAS E ADOLESCENTES: PERMANENTES OU NOVOS DESAFIOS PARA REDE DE PROTEÇÃO? Anna Luiza Lopes Liberato Alexandre Freire Brena Karoline Cavalcante de Oliveira, Adeílza Clímaco Ferreira e Cristiane Sousa Silva  Matutino</li>
-                <li>13. O LICENCIAMENTO AMBIENTAL COMO ESSENCIAL INSTRUMENTO DE GESTÃO E AS PROPOSTAS DE SUA FLEXIBILIZAÇÃO (COM ÊNFASE NA PEC 65/2012) Marise Costa de Souza Duarte Daniel Nicolau de Vasconcelos Pinheiro, Gilka da Mata Dias e Rondinelle Silva Oliveira  Matutino</li>
-                <li>14. OBEDIÊNCIA À AUTORIDADE NO CONTEXTO DA PSICOLOGIA DE MOVIMENTOS DE MASSA Jair Soares de Oliveira Segundo Ana Izabel Oliveira Lima, Fillipe Azevedo Rodrigues, Manuel Sabino Pontes e Rosivaldo Toscano dos Santos Júnior Matutino</li>
-                <li>15. OBSTÁCULOS HERMENÊUTICO-JURÍDICOS PARA A EFETIVIDADE DAS POLÍTICAS PÚBLICAS Fabiano André de Souza Mendonça Vladimir da Rocha França e Hallison Rêgo Bezerra Matutino</li>
-                <li>16. POLÍTICA TRIBUTÁRIA E DESIGUALDADES SOCIAIS: UM DEBATE NECESSÁRIO Igor Alexandre Felipe de Macedo Francisco Aurélio de Albuquerque Filho e Karol Marinho Matutino</li>
-                <li>17. POLÍTICAS PÚBLICAS E AGRICULTURA FAMILIAR NA CADEIA GLOBAL DO MELÃO NO ESTADO DO RIO GRANDE DO NORTE: LIMITES E POSSIBILIDADES João Matos Filho Emanoel Márcio Nunes e Manoel Cândido Matutino</li>
-                <li>18. TRABALHO DECENTE, CONDIÇÕES DE TRABALHO E PARTICIPAÇÃO FEMININA NA CADEIA PRODUTIVA DO MELÃO DO RN Valdenia Apolinário  Representante Feminina e Representante do Ministério do Trabalho Matutino</li>
-                <li>19. TUTELA EFETIVA DE DIREITOS NO ESTADO CONSTITUCIONAL: AS DECISÕES ESTRUTURAIS NO DIREITO BRASILEIRO Leonardo Martins Marcus Aurélio de Freitas Barro,  Marcus Vinicius Pereira Junior, Dimitre Soares, Guglielmo Marconi Soares de Castro e Giovanni Alessandro Begossi Matutino</li>
-            </ul>
-
-            <br><br>
-
-            <ul>
-                <li>1. ESTADO E SOCIEDADE NO DEBATE SOBRE SEGURANÇA ALIMENTAR Dalvanir Avelino da Silva Jean Pierre Tertuliano Câmara, Sonia Soares e Victor Hugo Dias Vespertino</li>
-                <li>2. ARTE URBANA E LIBERDADE DE EXPRESSÃO NO CONTEXTO DO DIREITO À CIDADE Leonardo Martins Marise Costa de Souza Duarte, Miguel Nery Santos Silva e Natália Bastos Bonavides  Vespertino</li>
-                <li>3. BANCOS COMUNITÁRIOS: UMA ALTERNATIVA PARA SUPERAÇÃO DAS DESIGUALDADES SOCIAIS Rosângela Alves de Oliveira Daniel Pereira, Emanuel Cadó e Larissa de Carvalho Nunes Vespertino</li>
-                <li>4. EMPREENDEDORISMO SOCIAL NO SÉCULO XXI Mauricio Assuero de Lima Freitas  Kalyna Fernamda Batista da Silva, Maria de Fátima da Silva e  Pauliana Pereira da Silva Marques  Vespertino</li>
-                <li>5. FORMAÇÃO DE GESTORES PÚBLICOS NO BRASIL: EXPERIÊNCIAS, CAMINHOS E ESTRATÉGIAS PARA PROFISSIONALIZAÇÃO Bruno Leonardo Bezerra da Silva  Thiago Ferreira Dias,Cynara Carvalho de Abreu e Raquel Alves Santos   Vespertino</li>
-                <li>6. OS DESAFIOS A SEREM ENFRENTADOS PARA IMPLEMENTAR A PESQUISA EMPÍRICA NO DIREITO: ENTRE O MÉTODO E A DOGMÁTICA Keity Mara Ferreira de Souza e Saboya Keity Mara Ferreira de Souza e Saboya e Luciano Athayde Chaves  Vespertino</li>
-                <li>7. PERSPECTIVAS DE GOVERNANÇA DO TURISMO NO BRASIL Wilker Nóbrega Jurema Dantas Vespertino</li>
-                <li>8. POLÍTICAS E AÇÕES DE MEMÓRIAS INSTITUCIONAIS: RELATOS Professor DECIN Eliane Braga de Oliveirae Teodora de Araújo Alves  Vespertino</li>
-                <li>9. SOCIEDADE CIVIL E DIREITO: COMO EXERCER A CIDADANIA PARA REDUZIR A DESIGUALDADE SOCIAL Ana Luíza Félix Severo Carlos André Maciel Pinheiro Pereirae Adson Kepler Monteiro Maia Vespertino</li>
-                <li>10. TURISMO E INCLUSÃO/EXCLUSÃO SOCIOESPACIAL Almir Félix Batista de Oliveira  Maria Lúcia Bastos Alves, Maria Augusta Wanderley Seabra de Melo, Ana Karina de Oliveira Maia Vespertino</li>
-                <li>11. TURISMO E PATRIMÔNIO CULTURAL: CENTROS HISTÓRICOS, GASTRONOMIA E TURISMO RELIGIOSO COMO FORMAS DE IDENTIDADE E DE PRESERVAÇÃO ATRAVÉS DA PRÁTICA TURÍSTICA. Almir Félix Batista de Oliveira  Maria Lúcia Bastos Alves, Maria Augusta Wanderley Seabra de Melo e Ana Karina de Oliveira Maia  Vespertino</li>
-            </ul>
-
-            <br><br>
-
-            <ul>
-                <li>1. DIREITO A SER CRIANÇA NA AMÉRICA LATINA: QUAL A RESPONSABILIDADE DO ESTADO NA INVISIBILIDADE INFANTIL? ANÁLISE CASUÍSTICA Ângelo José Menezes Silvino  Francisco André Alves Moura, José Serafim da Costa Neto e  Sânzia Mirelly da Costa Guedes Noturno</li>
-                <li>2. LITERATURA E QUESTÃO SOCIAL Zéu Palmeira Sobrinho  Henrique André Ramos Wellen e Zéu Palmeira Sobrinho Noturno</li>
-                <li>3. O CENTENÁRIO DA CODIFICAÇÃO CIVIL NO BRASIL E REFLEXÕES SOBRE A TEORIA DAS INCAPACIDADES A PARTIR DO ESTATUTO DA PESSOA COM DEFICIÊNCIA Fabiana Dantas Soares Alves da Mota Catarina Cardoso Sousa França, Erica Vericia Canuto de Oliveira Veras, Anna Emanuella Nelson dos Santos  Noturno</li>
-                <li>4. POLÍTICAS PÚBLICAS E SEGURANÇA ALIMENTAR NO RIO GRANDE DO NORTE Fábio Resende de Araújo Dalvanir Avelino da Silva e Richard Medeiros de Araújo Noturno</li>
-                <li>5. RACIONALIDADE DECISÓRIA E LIMITES AO IDEAL DE VIDA BOA: DIÁLOGO SOBRE A INTERVENÇÃO DO ESTADO NO FORO ÍNTIMO DO CIDADÃO Mariana de Siqueira Gustavo Barbosa, Gabriel Vitullo e Zéu Palmeira Noturno</li>
-                <li>6. SUBNOTIFICAÇÃO DO ACIDENTE DE TRABALHO INFANTIL Fabiana Dantas Soares Alves da Mota  Maxwellk da Silva Melo, Zéu Palmeira Sobrinho e Priscila Farias dos Anjos  Noturno</li>
-                <li>7. TRABALHO INFANTIL ARTÍSTICO E O PROTAGONISMO DOS MC´S Zéu Palmeira Sobrinho João Ricardo dos Reis Cavalcante Cerqueira, Winnie Alencar Farias e Suzana Melo de Oliveira Noturno</li>
-                <li>8. TRABALHO INFANTIL ARTÍSTICO E O PROTAGONISMO DOS MC’S Zéu Palmeira Sobrinho Suzana Melo de Oliveira, João Ricardo dos Reis Cavalcante Cerqueira e Winnie Alencar Farias Noturno</li>
-                <li>9. TRABALHO INFANTIL E ESCRAVO: UMA ANÁLISE A PARTIR DO DIREITO INTERNACIONAL DOS DIREITOS HUMANOS Fabiana Dantas Soares Alves da Mota  Amanda Oliveira da Câmara Moreira, Rafaela Oliveira Reis Cadó e Saulo de Medeiros Torres Noturno</li>
-                <li>10. TRIBUTAÇÃO DA ECONOMIA DIGITAL: CASOS UBER, NETFLIX E SPOTIFY Ana Beatriz Ferreira Rebello Presgrave Igor Alexandre Felipe de Macêdo, Félix Oliveira e Luiz Felipe Monteiro Seixas  Noturno</li>
-            </ul>
-
-        </div>
+<div class="modal-news" [ngClass]="{'open': modalMesaRedonda}">
+  <div class="container-all">
+    <div class="header">
+      MESAS REDONDAS
+      <a (click)="_toggleMesaRedondaModal()" (keypress.enter)="_toggleMesaRedondaModal()">FECHAR</a>
     </div>
+    <div class="container-modal">
+
+      <ul>
+        <li>1. A INSERÇÃO DO RIO GRANDE DO NORTE NOS SISTEMA AGROALIMENTARES GLOBALIZADOS: UMA ANÁLISE DO CASO DA FRUTICULTURA
+          A PARTIR DO CONCEITO DE VALOR AGREGADO Emanoel Márcio Nunes Walter Belik, Representante da Cooperativa de Produtores
+          do Melão e Representante do Sebrae Matutino</li>
+        <li>2. A MILITARIZAÇÃO ESCOLAR: UMA BOA SAÍDA PARA INEFICIÊNCIA ESTATAL NA PROMOÇÃO DO DIREITO À EDUCAÇÃO? Ângelo José
+          Menezes Silvino Gabriel Miranda Brito, José Willington Germano e Ana Beatriz Ferreira Rebello Presgrave Matutino</li>
+        <li>3. AGROTÓXICOS X AGROECOLOGIA: UM NECESSÁRIO DEBATE ENTRE ACADEMIA, INSTITUIÇÕES PÚBLICAS E SOCIEDADE Marise Costa
+          de Souza Duarte Joyce Naiana Paiva de Lima, João Hélio Cavalcanti e Tibério Clemente Rodrigues de Souza Matutino</li>
+        <li>4. ANÁLISE COMPARATIVA DA QUESTÃO HÍDRICA DO NORDESTE BRASILEIRO E DA ÁSIA CENTRAL: FALTA D’ÁGUA OU MÁ ADMINISTRAÇÃO
+          DE RECURSOS? Ângelo José Menezes Silvino Luiza Fernandes de Abrantes Barbosa, Breno Fabrício da Silva Santos e
+          Daniel César Neves e Silva Matutino</li>
+        <li>5. ASPECTOS GERAIS DO CPC/15 - DISCUSSÕES CRÍTICAS Fabiana Dantas Soares Alves da Mota Ana Beatriz Ferreira Rebello
+          Presgrave e Rafaela Oliveira Reis Cadó Matutino</li>
+        <li>6. CAMINHOS PARA PÓS-GRADUAÇÃO Kesia Cristine Melo Alunos da pós-graduação do CCSA Matutino</li>
+        <li>7. CIBERCONDRIA: UM PERIGO EMINENTE Thelma Pìgnataro Alunos do curso de Administração: Marketing Matutino</li>
+        <li>8. DIVERSIDADE E PROBLEMAS DE GÊNERO NA INTERNET Mariana de Siqueira Gustavo Paiva, Monalisa de Souza e Martha da
+          Costa Matutino</li>
+        <li>9. DIVERSIDADE HUMANA E MARXISMO: DIVERSIDADE SEXUAL E A QUESTÃO DAS DROGAS EM DISCUSSÃO Mariana de Siqueira Gustavo
+          Paiva, Monalisa de Souza e Martha da Costa Matutino</li>
+        <li>10. LÊNIN, ZAPATA E O CONSTITUCIONALISMO BRASILEIRO: UMA ANÁLISE DO CENTENÁRIO DAS REVOLUÇÕES SOCIAIS Mariana de
+          Siqueira Gustavo Barbosa, Gabriel Vitullo e Zéu Palmeira Matutino</li>
+        <li>11. NA PRÁTICA, A TEORIA É OUTRA? INSTRUMENTALIDADE NA PERSPECTIVA DO PROJETO ÉTICO-POLÍTICO DO SERVIÇO SOCIAL BRASILEIRO
+          Tibério Lima Henrique Wellen, Silvana Mara de Morais dos Santos e Daniela Neves Matutino</li>
+        <li>12. O ENFRENTAMENTO À VIOLÊNCIA SEXUAL CONTRA CRIANÇAS E ADOLESCENTES: PERMANENTES OU NOVOS DESAFIOS PARA REDE DE
+          PROTEÇÃO? Anna Luiza Lopes Liberato Alexandre Freire Brena Karoline Cavalcante de Oliveira, Adeílza Clímaco Ferreira
+          e Cristiane Sousa Silva Matutino</li>
+        <li>13. O LICENCIAMENTO AMBIENTAL COMO ESSENCIAL INSTRUMENTO DE GESTÃO E AS PROPOSTAS DE SUA FLEXIBILIZAÇÃO (COM ÊNFASE
+          NA PEC 65/2012) Marise Costa de Souza Duarte Daniel Nicolau de Vasconcelos Pinheiro, Gilka da Mata Dias e Rondinelle
+          Silva Oliveira Matutino</li>
+        <li>14. OBEDIÊNCIA À AUTORIDADE NO CONTEXTO DA PSICOLOGIA DE MOVIMENTOS DE MASSA Jair Soares de Oliveira Segundo Ana
+          Izabel Oliveira Lima, Fillipe Azevedo Rodrigues, Manuel Sabino Pontes e Rosivaldo Toscano dos Santos Júnior Matutino</li>
+        <li>15. OBSTÁCULOS HERMENÊUTICO-JURÍDICOS PARA A EFETIVIDADE DAS POLÍTICAS PÚBLICAS Fabiano André de Souza Mendonça Vladimir
+          da Rocha França e Hallison Rêgo Bezerra Matutino</li>
+        <li>16. POLÍTICA TRIBUTÁRIA E DESIGUALDADES SOCIAIS: UM DEBATE NECESSÁRIO Igor Alexandre Felipe de Macedo Francisco Aurélio
+          de Albuquerque Filho e Karol Marinho Matutino</li>
+        <li>17. POLÍTICAS PÚBLICAS E AGRICULTURA FAMILIAR NA CADEIA GLOBAL DO MELÃO NO ESTADO DO RIO GRANDE DO NORTE: LIMITES
+          E POSSIBILIDADES João Matos Filho Emanoel Márcio Nunes e Manoel Cândido Matutino</li>
+        <li>18. TRABALHO DECENTE, CONDIÇÕES DE TRABALHO E PARTICIPAÇÃO FEMININA NA CADEIA PRODUTIVA DO MELÃO DO RN Valdenia Apolinário
+          Representante Feminina e Representante do Ministério do Trabalho Matutino</li>
+        <li>19. TUTELA EFETIVA DE DIREITOS NO ESTADO CONSTITUCIONAL: AS DECISÕES ESTRUTURAIS NO DIREITO BRASILEIRO Leonardo Martins
+          Marcus Aurélio de Freitas Barro,  Marcus Vinicius Pereira Junior, Dimitre Soares, Guglielmo Marconi Soares de Castro
+          e Giovanni Alessandro Begossi Matutino</li>
+      </ul>
+
+      <br><br>
+
+      <ul>
+        <li>1. ESTADO E SOCIEDADE NO DEBATE SOBRE SEGURANÇA ALIMENTAR Dalvanir Avelino da Silva Jean Pierre Tertuliano Câmara,
+          Sonia Soares e Victor Hugo Dias Vespertino</li>
+        <li>2. ARTE URBANA E LIBERDADE DE EXPRESSÃO NO CONTEXTO DO DIREITO À CIDADE Leonardo Martins Marise Costa de Souza Duarte,
+          Miguel Nery Santos Silva e Natália Bastos Bonavides Vespertino</li>
+        <li>3. BANCOS COMUNITÁRIOS: UMA ALTERNATIVA PARA SUPERAÇÃO DAS DESIGUALDADES SOCIAIS Rosângela Alves de Oliveira Daniel
+          Pereira, Emanuel Cadó e Larissa de Carvalho Nunes Vespertino</li>
+        <li>4. EMPREENDEDORISMO SOCIAL NO SÉCULO XXI Mauricio Assuero de Lima Freitas Kalyna Fernamda Batista da Silva, Maria
+          de Fátima da Silva e Pauliana Pereira da Silva Marques Vespertino</li>
+        <li>5. FORMAÇÃO DE GESTORES PÚBLICOS NO BRASIL: EXPERIÊNCIAS, CAMINHOS E ESTRATÉGIAS PARA PROFISSIONALIZAÇÃO Bruno Leonardo
+          Bezerra da Silva Thiago Ferreira Dias,Cynara Carvalho de Abreu e Raquel Alves Santos   Vespertino</li>
+        <li>6. OS DESAFIOS A SEREM ENFRENTADOS PARA IMPLEMENTAR A PESQUISA EMPÍRICA NO DIREITO: ENTRE O MÉTODO E A DOGMÁTICA
+          Keity Mara Ferreira de Souza e Saboya Keity Mara Ferreira de Souza e Saboya e Luciano Athayde Chaves Vespertino</li>
+        <li>7. PERSPECTIVAS DE GOVERNANÇA DO TURISMO NO BRASIL Wilker Nóbrega Jurema Dantas Vespertino</li>
+        <li>8. POLÍTICAS E AÇÕES DE MEMÓRIAS INSTITUCIONAIS: RELATOS Professor DECIN Eliane Braga de Oliveirae Teodora de Araújo
+          Alves Vespertino</li>
+        <li>9. SOCIEDADE CIVIL E DIREITO: COMO EXERCER A CIDADANIA PARA REDUZIR A DESIGUALDADE SOCIAL Ana Luíza Félix Severo
+          Carlos André Maciel Pinheiro Pereirae Adson Kepler Monteiro Maia Vespertino</li>
+        <li>10. TURISMO E INCLUSÃO/EXCLUSÃO SOCIOESPACIAL Almir Félix Batista de Oliveira Maria Lúcia Bastos Alves, Maria Augusta
+          Wanderley Seabra de Melo, Ana Karina de Oliveira Maia Vespertino</li>
+        <li>11. TURISMO E PATRIMÔNIO CULTURAL: CENTROS HISTÓRICOS, GASTRONOMIA E TURISMO RELIGIOSO COMO FORMAS DE IDENTIDADE
+          E DE PRESERVAÇÃO ATRAVÉS DA PRÁTICA TURÍSTICA. Almir Félix Batista de Oliveira Maria Lúcia Bastos Alves, Maria
+          Augusta Wanderley Seabra de Melo e Ana Karina de Oliveira Maia Vespertino</li>
+      </ul>
+
+      <br><br>
+
+      <ul>
+        <li>1. DIREITO A SER CRIANÇA NA AMÉRICA LATINA: QUAL A RESPONSABILIDADE DO ESTADO NA INVISIBILIDADE INFANTIL? ANÁLISE
+          CASUÍSTICA Ângelo José Menezes Silvino Francisco André Alves Moura, José Serafim da Costa Neto e Sânzia Mirelly
+          da Costa Guedes Noturno</li>
+        <li>2. LITERATURA E QUESTÃO SOCIAL Zéu Palmeira Sobrinho Henrique André Ramos Wellen e Zéu Palmeira Sobrinho Noturno</li>
+        <li>3. O CENTENÁRIO DA CODIFICAÇÃO CIVIL NO BRASIL E REFLEXÕES SOBRE A TEORIA DAS INCAPACIDADES A PARTIR DO ESTATUTO
+          DA PESSOA COM DEFICIÊNCIA Fabiana Dantas Soares Alves da Mota Catarina Cardoso Sousa França, Erica Vericia Canuto
+          de Oliveira Veras, Anna Emanuella Nelson dos Santos Noturno</li>
+        <li>4. POLÍTICAS PÚBLICAS E SEGURANÇA ALIMENTAR NO RIO GRANDE DO NORTE Fábio Resende de Araújo Dalvanir Avelino da Silva
+          e Richard Medeiros de Araújo Noturno</li>
+        <li>5. RACIONALIDADE DECISÓRIA E LIMITES AO IDEAL DE VIDA BOA: DIÁLOGO SOBRE A INTERVENÇÃO DO ESTADO NO FORO ÍNTIMO DO
+          CIDADÃO Mariana de Siqueira Gustavo Barbosa, Gabriel Vitullo e Zéu Palmeira Noturno</li>
+        <li>6. SUBNOTIFICAÇÃO DO ACIDENTE DE TRABALHO INFANTIL Fabiana Dantas Soares Alves da Mota Maxwellk da Silva Melo, Zéu
+          Palmeira Sobrinho e Priscila Farias dos Anjos Noturno</li>
+        <li>7. TRABALHO INFANTIL ARTÍSTICO E O PROTAGONISMO DOS MC´S Zéu Palmeira Sobrinho João Ricardo dos Reis Cavalcante Cerqueira,
+          Winnie Alencar Farias e Suzana Melo de Oliveira Noturno</li>
+        <li>8. TRABALHO INFANTIL ARTÍSTICO E O PROTAGONISMO DOS MC’S Zéu Palmeira Sobrinho Suzana Melo de Oliveira, João Ricardo
+          dos Reis Cavalcante Cerqueira e Winnie Alencar Farias Noturno</li>
+        <li>9. TRABALHO INFANTIL E ESCRAVO: UMA ANÁLISE A PARTIR DO DIREITO INTERNACIONAL DOS DIREITOS HUMANOS Fabiana Dantas
+          Soares Alves da Mota Amanda Oliveira da Câmara Moreira, Rafaela Oliveira Reis Cadó e Saulo de Medeiros Torres Noturno</li>
+        <li>10. TRIBUTAÇÃO DA ECONOMIA DIGITAL: CASOS UBER, NETFLIX E SPOTIFY Ana Beatriz Ferreira Rebello Presgrave Igor Alexandre
+          Felipe de Macêdo, Félix Oliveira e Luiz Felipe Monteiro Seixas Noturno</li>
+      </ul>
+
+    </div>
+  </div>
 </div>
 
-<div class="modal-news" [ngClass]="{'open': modalConferencia}" >
-    <div class="container-all">
-        <div class="header">
-            PROGRAMAÇÃO
-            <a (click)="_toggleConferenciaModal()" (keypress.enter)="_toggleConferenciaModal()">FECHAR</a>
-        </div>
-        <div class="container-modal">
-
-            Programação em breve.
-
-        </div>
+<div class="modal-news" [ngClass]="{'open': modalConferencia}">
+  <div class="container-all">
+    <div class="header">
+      PROGRAMAÇÃO
+      <a (click)="_toggleConferenciaModal()" (keypress.enter)="_toggleConferenciaModal()">FECHAR</a>
     </div>
+    <div class="container-modal">
+
+      Programação em breve.
+
+    </div>
+  </div>
 </div>
 
 
-<div class="modal-news" [ngClass]="{'open': modalProgramacao}" >
-    <div class="container-all">
-        <div class="header">
-            PROGRAMAÇÃO
-            <a (click)="_toggleProgramacaoModal()" (keypress.enter)="_toggleProgramacaoModal()">FECHAR</a>
-        </div>
-        <div class="container-modal">
-
-            Programação em breve.
-
-        </div>
+<div class="modal-news" [ngClass]="{'open': modalProgramacao}">
+  <div class="container-all">
+    <div class="header">
+      PROGRAMAÇÃO
+      <a (click)="_toggleProgramacaoModal()" (keypress.enter)="_toggleProgramacaoModal()">FECHAR</a>
     </div>
+    <div class="container-modal">
+
+      Programação em breve.
+
+    </div>
+  </div>
 </div>
