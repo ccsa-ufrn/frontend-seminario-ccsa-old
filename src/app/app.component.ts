@@ -21,6 +21,9 @@ export class AppComponent implements OnInit {
     private modalMesaRedonda: boolean;
     private modalConferencia: boolean;
     private modalProgramacao: boolean;
+    private modalUmaNoticiaModal: boolean;
+
+    public umaNoticia: News;
 
     @ViewChild('mailInput')
     private _mailInput: ElementRef;
@@ -60,6 +63,7 @@ export class AppComponent implements OnInit {
         this.modalMesaRedonda = false;
         this.modalConferencia = false;
         this.modalProgramacao = false;
+        this.modalUmaNoticiaModal = false;
 
         /** REGISTER FORM */
         this._registerForm = this._formBuilder.group({
@@ -321,6 +325,22 @@ export class AppComponent implements OnInit {
 
     private _toggleProgramacaoModal() {
         this.modalProgramacao = !this.modalProgramacao;
+    }
+
+    private _toggleUmaNoticiaModal(id?: number) {
+        if(id) {
+            this._geralService.getNewsOne(id)
+                .subscribe((news: News) => {
+                    this.umaNoticia = news;
+                    this.modalUmaNoticiaModal = !this.modalUmaNoticiaModal;
+                });
+        } else {
+            this.modalUmaNoticiaModal = !this.modalUmaNoticiaModal;
+        }
+    }
+
+    public abrirUmaNoticia(e: number) {
+        this._toggleUmaNoticiaModal(e);
     }
 
 }

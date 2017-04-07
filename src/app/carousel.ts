@@ -1,5 +1,6 @@
 import { Component, OnInit, ViewChild,
-    ElementRef, Renderer, NgZone, Inject } from '@angular/core';
+    ElementRef, Renderer, NgZone, Inject,
+    Output, EventEmitter } from '@angular/core';
 import { DomHandler } from './dom-handler.service';
 import { GeralService, ThematicGroup, GT, News } from './geral.service';
 import { Observable } from 'rxjs/Rx';
@@ -12,7 +13,8 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
         <a class="btn left" (click)="previous()"><</a>
 
         <div class="news-container">
-          <a class="news" *ngFor="let n of news">
+          <a class="news" *ngFor="let n of news" (click)="abrirDialogo(allNews[n].id)"
+            (keyup.enter)="abrirDialogo(allNews[n].id)">
             <h1>{{ allNews[n].title }}</h1>
             <p [innerHTML]="allNews[n].text"></p>
           </a>
@@ -40,6 +42,15 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
         font-size: 30px;
         padding: 95px 10px;
         cursor: pointer;
+        background: #fcb813;
+      }
+
+      .btn:hover, .btn:focus {
+        background: #edaa10;
+      }
+
+      .btn:active {
+        background: #f4bf4b;
       }
 
       .btn.left {
@@ -58,12 +69,21 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
       .news {
         display: block;
         width: calc( 100% / 3 );
-        margin: auto 10px;
+        padding: 10px 10px;
         cursor: pointer;
       }
 
+      .news:hover, .news:focus {
+        background: rgba(238, 238, 238, 0.8);
+      }
+
       .news h1 {
-        font-size: 10px;
+        font-size: 14px;
+        font-weight: bold;
+      }
+
+      .news p {
+        font-size: 12px;
       }
 
     `],
@@ -73,6 +93,9 @@ export class CarouselComponent implements OnInit {
 
   private news: Array<number>;
   private allNews: Array<News>;
+
+  @Output()
+  openModal: EventEmitter<number> = new EventEmitter<number>();
 
   constructor(private _geral: GeralService) {
 
@@ -111,6 +134,10 @@ export class CarouselComponent implements OnInit {
         this.news[i] = this.allNews.length-1;
       }
     }
+  }
+
+  public abrirDialogo(id: number) {
+    this.openModal.emit(id);
   }
 
   ngOnInit() { }

@@ -181,7 +181,7 @@
         </div>
       </div>
 
-      <carousel></carousel>
+      <carousel (openModal)="abrirUmaNoticia($event)" ></carousel>
 
       <!--<a (click)="_toggleNewsModal()" (keypress.enter)="_toggleNewsModal()" style="cursor: pointer;">
         <div class="row">
@@ -816,6 +816,18 @@
 
       Programação em breve.
 
+    </div>
+  </div>
+</div>
+
+
+<div class="modal-news" [ngClass]="{'open': modalUmaNoticiaModal}">
+  <div class="container-all">
+    <div class="header" style="overflow: hidden;">
+      <div class="big">{{umaNoticia?.title}} </div>
+      <a (click)="_toggleUmaNoticiaModal()" (keypress.enter)="_toggleUmaNoticiaModal()">FECHAR</a>
+    </div>
+    <div class="container-modal" [innerHTML]="umaNoticia?.text">
     </div>
   </div>
 </div>
