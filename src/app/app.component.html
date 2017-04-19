@@ -28,7 +28,7 @@
                 <button type="submit" style="cursor: pointer;" [disabled]="_isDoingLogin">{{ _isDoingLogin ? 'AGUARDE...' : 'LOGIN' }}</button>
               </form>
             </div>
-            <div class="forgot">
+            <div class="forgot" style="color: black;">
               <a (click)="_toggleResetPasswordModal()" (keypress.enter)="_toggleResetPasswordModal()">Esqueci a senha</a>
             </div>
           </div>
