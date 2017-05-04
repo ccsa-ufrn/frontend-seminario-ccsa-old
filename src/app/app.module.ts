@@ -5,16 +5,15 @@ import { HttpModule } from '@angular/http';
 import { GeralService } from './geral.service';
 import { AppComponent } from './app.component';
 import { CarouselComponent } from './carousel';
+import { CarouselVideosComponent, SafePipe } from './carousel-videos';
 
 @NgModule({
   declarations: [
-    AppComponent,
-    CarouselComponent
+    AppComponent, CarouselComponent,
+    CarouselVideosComponent, SafePipe
   ],
   imports: [
-    BrowserModule,
-    HttpModule,
-    FormsModule,
+    BrowserModule, HttpModule, FormsModule,
     ReactiveFormsModule
   ],
   providers: [GeralService],

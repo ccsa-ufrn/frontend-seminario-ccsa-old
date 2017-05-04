@@ -176,6 +176,19 @@
     <div class="container">
       <div class="row">
         <div class="col-md-12">
+          <h1>NOVIDADES</h1>
+        </div>
+      </div>
+
+      <carousel-videos></carousel-videos>
+
+    </div>
+  </section>
+
+  <section class="news">
+    <div class="container">
+      <div class="row">
+        <div class="col-md-12">
           <h1>NOTÍCIAS</h1>
           <a (click)="_toggleNewsModal()" (keyup.enter)="_toggleNewsModal()" class="more-news">TODAS AS NOTÍCIAS</a>
         </div>
@@ -183,23 +196,6 @@
 
       <carousel (openModal)="abrirUmaNoticia($event)" ></carousel>
 
-      <!--<a (click)="_toggleNewsModal()" (keypress.enter)="_toggleNewsModal()" style="cursor: pointer;">
-        <div class="row">
-          <div class="col-md-4">
-            <div class="news marked">
-              <span class="mark">DESTAQUE</span>
-              <h1>{{ _markedNews.title }}</h1>
-              <p [innerHTML]="_markedNews.text"></p>
-            </div>
-          </div>
-          <div class="col-md-4" *ngFor="let i of _othersNews;">
-            <div class="news">
-              <h1>{{ i.title }}</h1>
-              <p [innerHTML]="i.text"></p>
-            </div>
-          </div>
-        </div>
-      </a>-->
     </div>
   </section>
 
@@ -794,12 +790,94 @@
 <div class="modal-news" [ngClass]="{'open': modalConferencia}">
   <div class="container-all">
     <div class="header">
-      PROGRAMAÇÃO
+      CONFERÊNCIAS - PROGRAMAÇÃO
       <a (click)="_toggleConferenciaModal()" (keypress.enter)="_toggleConferenciaModal()">FECHAR</a>
     </div>
     <div class="container-modal">
 
-      Programação em breve.
+      <h2>CONFERÊNCIA DE ABERTURA (08/05)</h2>
+
+      <ul>
+        <li><b>DESIGUALDADES SOCIAIS: UMA ABORDAGEM A PARTIR DO FUNDO PÚBLICO</b> | 19h |  Prof. Dr. Evilásio Salvador
+          <p>Auditório Otto de Brito Guerra (Reitoria)</p>
+        </li>
+      </ul>
+
+      <h2>CONFERÊNCIAS DE 09/05 (MATUTINO)</h2>
+
+      <ul>
+        <li><b>PARTICIPAÇÃO SOCIAL E EFETIVIDADE DE ORGANIZAÇÕES PÚBLICAS: QUAL O VERDADEIRO PAPEL DOS STAKEHOLDERS?</b> | 9h30-11h30  | Prof. Ricardo Corrêa Gomes
+          <p>Auditório Nepsa 1</p>
+        </li>
+        <li><b>AS CONDIÇÕES SOCIOECONÔMICAS E A VIOLÊNCIA DOMÉSTICA CONTRA A MULHER</b> | 9h30-11h30  | Prof. José Raimundo Carvalho
+          <p>Auditório do Núcleo de Práticas Jurídicas - NPJ</p>
+        </li>
+      </ul>
+
+      <h2>CONFERÊNCIAS DE 09/05 (VESPERTINO)</h2>
+
+      <ul>
+        <li><b>MEMÓRIA INSTITUCIONAL</b> | 15h30-17h15 | Profa. Dra. Eliane Braga de Oliveira
+          <p>Biblioteca Central Zila Mamede </p>
+        </li>
+        <li><b>A IMPORTÂNCIA DAS POLÍTICAS PÚBLICAS DE CULTURA PARA O DESENOLVIMENTO DA CADEIA PRODUTIVA DOS MUSEUS E DO TURISMO</b> | 15h30-17h15 | Profa. Dra. Isabela Andrade Morais
+          <p>Auditório do Núcleo de Práticas Jurídicas - NPJ</p>
+        </li>
+        <li><b>EXTENSÃO UNIVERSITÁRIA: uma questão de cidadania</b> | 15h30-17h15 | Profa. Dra. Clébia Mardônia Freitas Silva
+          <p>Auditório de Ciências Contábeis Sala H2 Setor V</p>
+        </li>
+      </ul>
+
+      <h2>CONFERÊNCIAS DE 09/05 (NOTURNO)</h2>
+
+      <ul>
+        <li><b>DESCUBRA O EMPREENDEDOR QUE EXISTE EM VOCÊ</b> | 20h00-22h15 | Marcelo Henrique Neves Pereira
+          <p>Auditório Sala H2 Setor V</p>
+        </li>
+      </ul>
+
+      <h2>CONFERÊNCIAS DE 10/05 (MATUTINO)</h2>
+
+      <ul>
+        <li><b>O AJUSTE FISCAL E A REALIDADE ATUAL DA ECONOMIA BRASILEIRA: REFORMAS, DIAGNÓSTICOS E PERSPECTIVAS</b> | 9h30-11h30 | Prof. Dr. Pedro Rossi
+          <p>Auditório do Núcleo de Práticas Jurídicas - NPJ</p>
+        </li>
+      </ul>
+
+      <h2>CONFERÊNCIAS DE 10/05 (VESPERTINO)</h2>
+
+      <ul>
+        <li><b>INOVAÇÃO E ESTRATÉGIA EM ORGANIZAÇÕES PÚBLICAS DE GOVERNO: RELATO DE EXPERIÊNCIAS</b> | 15h30-17h15 | Prof. Dr. Antônio Isidro da Silva Filho
+          <p>Auditório do Nepsa 1</p>
+        </li>
+      </ul>
+
+      <h2>CONFERÊNCIAS DE 11/05 (MATUTINO)</h2>
+
+      <ul>
+        <li><b>FINANÇAS PESSOAIS</b> | 9h30-11h30 | Prof. Dr. Marcus Vinicius Veras Machado
+          <p>Auditório do Nepsa 1</p>
+        </li>
+      </ul>
+
+      <h2>CONFERÊNCIAS DE 11/05 (NOTURNO)</h2>
+
+      <ul>
+        <li><b>ENTRE A CONVENÇÃO DE NOVA YORK E A LEI BRASILEIRA DE ACESSIBILIDADE - AVANÇOS OU RETROCESSOS?</b> | 20h00-22h15 | Profa. Dra. Larissa Maria de Moraes Leal
+          <p>Auditório do Núcleo de Práticas Jurídicas - NPJ</p>
+        </li>
+        <li><b>PLANEJAMENTO TRIBUTÁRIO: ASPECTOS RACIONAIS E COMPORTAMENTAIS</b> | 20h00-22h15 |  Prof. Fabrício Costa Resende Campos
+          <p>Auditório 3 – Nepsa II</p>
+        </li>
+      </ul>
+
+      <h2>CONFERÊNCIAS DE 12/05 (MATUTINO)</h2>
+
+      <ul>
+        <li><b>A CONTRARREFORMA DA PREVIDÊNCIA SOCIAL NO CONTEXTO DA CRISE DO CAPITAL</b> | 09h30-11h30 | Profa. Dra. Sara Graneman
+          <p>Auditório do Núcleo de Práticas Jurídicas - NPJ</p>
+        </li>
+      </ul>
 
     </div>
   </div>
@@ -814,7 +892,7 @@
     </div>
     <div class="container-modal">
 
-      Programação em breve.
+      <a href="assets/ng2/download/programacao.pdf" target="_blank">CLIQUE AQUI</a> PARA BAIXAR A PROGRAMAÇÃO.
 
     </div>
   </div>
